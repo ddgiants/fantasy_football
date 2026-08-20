@@ -90,17 +90,6 @@
         </div>
 
         <div class="legend">
-            <div class="legend-item"><div class="legend-color" style="background: #3498db;"></div>RB</div>
-            <div class="legend-item"><div class="legend-color" style="background: #2ecc71;"></div>WR</div>
-            <div class="legend-item"><div class="legend-color" style="background: #f39c12;"></div>TE</div>
-            <div class="legend-item"><div class="legend-color" style="background: #e74c3c;"></div>QB</div>
-            <div class="legend-item"><div class="legend-color" style="background: #1abc9c;"></div>DST</div>
-            <div class="legend-item"><div class="legend-color" style="background: #9b59b6;"></div>K</div>
-            <div class="legend-item" style="margin-left: 8px;"><div class="legend-color" style="background: #d4edda; border: 1px solid #28a745;"></div>Experts Love</div>
-            <div class="legend-item"><div class="legend-color" style="background: #fff8e1; border: 1px solid #ffc107;"></div>Agree</div>
-            <div class="legend-item"><div class="legend-color" style="background: #fce4ec; border: 1px solid #dc3545;"></div>Public Loves</div>
-            <div class="legend-item"><div class="legend-color" style="background: #fff176; border: 1px solid #f9a825;"></div>My Target</div>
-            <div class="legend-item"><div class="legend-color" style="background: #555;"></div>Taken / Don't Draft</div>
             <div class="legend-item" style="margin-left: 8px; opacity: 0.7; font-size: 9px;">Shift+Click = Gray | DblClick = Yellow</div>
             <div class="legend-item" style="margin-left: 8px;"><span class="flag-badge flag-s">S</span>Sleeper</div>
             <div class="legend-item"><span class="flag-badge flag-t">T</span>Target</div>
@@ -238,6 +227,7 @@
         var dragSrc = null;
         var STORAGE_KEY = 'peaked-cheatsheet-2026';
         var fileHandle = null;
+        var pendingFileHandle = null;
         var autoSaveTimer = null;
 
         function saveData() {
@@ -287,14 +277,25 @@
 
         async function connectFile() {
             try {
-                var handle = await window.showSaveFilePicker({
-                    suggestedName: 'peaked-cheatsheet-2026.json',
-                    types: [{ description: 'JSON', accept: { 'application/json': ['.json'] } }]
-                });
-                fileHandle = handle;
-                await storeFileHandle(handle);
-                await autoSaveToFile();
-                document.getElementById('connect-btn').textContent = 'File Connected';
+                var handle = pendingFileHandle;
+                pendingFileHandle = null;
+                if (!handle) {
+                    handle = await window.showSaveFilePicker({
+                        suggestedName: 'peaked-cheatsheet-2026.json',
+                        types: [{ description: 'JSON', accept: { 'application/json': ['.json'] } }]
+                    });
+                    await storeFileHandle(handle);
+                }
+                var perm = await handle.requestPermission({ mode: 'readwrite' });
+                if (perm === 'granted') {
+                    fileHandle = handle;
+                    await storeFileHandle(handle);
+                    await autoSaveToFile();
+                    document.getElementById('connect-btn').textContent = 'File Connected';
+                    document.getElementById('connect-btn').title = '';
+                } else {
+                    alert('Permission denied. Please grant read/write access to the file.');
+                }
             } catch(e) {
                 if (e.name !== 'AbortError') {
                     alert('Could not connect file: ' + e.message);
@@ -330,11 +331,17 @@
                     req.onerror = function(e) { reject(e.target.error); };
                 });
                 if (handle) {
-                    var perm = await handle.requestPermission({ mode: 'readwrite' });
-                    if (perm === 'granted') {
-                        fileHandle = handle;
-                        document.getElementById('connect-btn').textContent = 'File Connected';
-                    }
+                    try {
+                        var perm = await handle.requestPermission({ mode: 'readwrite' });
+                        if (perm === 'granted') {
+                            fileHandle = handle;
+                            document.getElementById('connect-btn').textContent = 'File Connected';
+                            return;
+                        }
+                    } catch(e) {}
+                    document.getElementById('connect-btn').textContent = 'Reconnect File';
+                    document.getElementById('connect-btn').title = 'Click to restore file connection';
+                    pendingFileHandle = handle;
                 }
             } catch(e) {}
         }

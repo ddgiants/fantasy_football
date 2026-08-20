@@ -255,8 +255,7 @@
       "name": "Brock Bowers",
       "team": "LV",
       "flag": "",
-      "adp": "2.08",
-      "yellow": true
+      "adp": "2.08"
     },
     "qb": {
       "name": "Josh Allen",
@@ -288,8 +287,7 @@
       "name": "Trey McBride",
       "team": "ARI",
       "flag": "",
-      "adp": "3.02",
-      "yellow": true
+      "adp": "3.02"
     },
     "qb": null,
     "dst": null,
