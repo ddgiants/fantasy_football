@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PEAKED - Peak's Fantasy Cheat Sheets - 2026</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; padding: 10px; }
+        .container { max-width: 1600px; margin: 0 auto; background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); overflow: hidden; }
+
+        .header { background: #1a1a2e; color: white; padding: 12px 20px; text-align: center; }
+        .header h1 { font-size: 22px; margin-bottom: 2px; }
+        .header h2 { font-size: 14px; font-weight: normal; opacity: 0.9; }
+        .header .meta { display: flex; justify-content: center; gap: 20px; margin-top: 6px; font-size: 11px; opacity: 0.8; flex-wrap: wrap; }
+
+        .legend { display: flex; justify-content: center; gap: 10px; padding: 8px 10px; background: #f8f9fa; border-bottom: 1px solid #ddd; flex-wrap: wrap; font-size: 10px; }
+        .legend-item { display: flex; align-items: center; gap: 3px; font-weight: 600; }
+        .legend-color { width: 12px; height: 12px; border-radius: 2px; }
+
+        .draft-board { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 10px;  }
+
+        .pos-header th { background: #34495e; color: white; padding: 6px 2px; text-align: center; font-weight: 700; font-size: 11px; }
+        .pos-header .label-hdr { background: #2c3e50; }
+        .pos-rb { background: #3498db !important; }
+        .pos-wr { background: #2ecc71 !important; }
+        .pos-te { background: #f39c12 !important; }
+        .pos-qb { background: #e74c3c !important; }
+        .pos-dst { background: #1abc9c !important; }
+        .pos-k { background: #9b59b6 !important; }
+
+        thead tr:nth-child(2) th { background: #2c3e50; color: white; padding: 4px 2px; text-align: center; font-weight: 600; font-size: 9px; }
+        thead th { position: sticky; top: 0; z-index: 10; }
+
+        tbody td { padding: 4px 2px; text-align: center; vertical-align: middle; border: 1px solid #e0e0e0; font-size: 12px; }
+
+        .round-cell { font-size: 14px; font-weight: bold; color: #2c3e50; background: #f0f4f8; text-align: center; vertical-align: middle; border-right: 2px solid #ccc !important; }
+        .rank-cell { font-size: 10px; color: #555; font-weight: 600; }
+        .value-cell { font-size: 10px; color: #27ae60; font-weight: bold; border-right: 2px solid #ccc !important; }
+
+        .pick-player { text-align: left; padding-left: 4px !important; font-weight: 600; color: #333; }
+        .pick-team { text-align: center; color: #666; font-size: 9px; }
+        .pick-flag { text-align: center; }
+        .pick-adp { text-align: center; color: #888; font-size: 9px; }
+
+        .cell-grayed { background: #555 !important; color: #bbb !important; }
+        .cell-yellow { background: #fff176 !important; }
+        .slot-group { cursor: grab; }
+        .slot-group:active { cursor: grabbing; }
+        .slot-group.dragging { opacity: 0.4; }
+        .slot-group.drag-over { outline: 2px dashed #2c3e50; outline-offset: -2px; background: #fffde7 !important; }
+
+        .flag-badge { display: inline-block; padding: 0 3px; border-radius: 2px; font-size: 8px; font-weight: bold; color: white; }
+        .flag-s { background: #17a2b8; }
+        .flag-t { background: #28a745; }
+        .flag-v { background: #6f42c1; }
+        .flag-b { background: #dc3545; }
+        .flag-i { background: #fd7e14; }
+        .flag-a { background: #343a40; }
+
+        .col-rb { border-left: 3px solid #3498db !important; }
+        .col-wr { border-left: 3px solid #2ecc71 !important; }
+        .col-te { border-left: 3px solid #f39c12 !important; }
+        .col-qb { border-left: 3px solid #e74c3c !important; }
+        .col-dst { border-left: 3px solid #1abc9c !important; }
+
+        .notes-section { padding: 12px; background: #f8f9fa; border-top: 1px solid #ddd; }
+        .notes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .note-card { background: white; padding: 8px; border-radius: 4px; border: 1px solid #ddd; font-size: 9px; }
+        .note-card h4 { font-size: 10px; color: #666; margin-bottom: 4px; }
+        .note-card ul { padding-left: 12px; line-height: 1.5; }
+        @media (max-width: 900px) { .notes-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>PEAKED</h1>
+            <h2>Peak's Fantasy Cheat Sheets - 2026</h2>
+            <div class="meta">
+                <span>Format: 1 QB non-PPR 12 Team</span>
+                <span>Source: PeakedInHighSkool.com</span>
+                <span>Date: August 8, 2026</span>
+                <span>Rev: 2.01</span>
+                <button onclick="resetData()" style="margin-left:12px;padding:2px 8px;font-size:10px;cursor:pointer;border:1px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.1);color:white;border-radius:3px;">Reset</button>
+                <button id="connect-btn" onclick="connectFile()" style="margin-left:6px;padding:2px 8px;font-size:10px;cursor:pointer;border:1px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.1);color:white;border-radius:3px;">Connect File</button>
+                <span id="save-status" style="margin-left:6px;font-size:10px;opacity:0.7;"></span>
+            </div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item"><div class="legend-color" style="background: #3498db;"></div>RB</div>
+            <div class="legend-item"><div class="legend-color" style="background: #2ecc71;"></div>WR</div>
+            <div class="legend-item"><div class="legend-color" style="background: #f39c12;"></div>TE</div>
+            <div class="legend-item"><div class="legend-color" style="background: #e74c3c;"></div>QB</div>
+            <div class="legend-item"><div class="legend-color" style="background: #1abc9c;"></div>DST</div>
+            <div class="legend-item"><div class="legend-color" style="background: #9b59b6;"></div>K</div>
+            <div class="legend-item" style="margin-left: 8px;"><div class="legend-color" style="background: #d4edda; border: 1px solid #28a745;"></div>Experts Love</div>
+            <div class="legend-item"><div class="legend-color" style="background: #fff8e1; border: 1px solid #ffc107;"></div>Agree</div>
+            <div class="legend-item"><div class="legend-color" style="background: #fce4ec; border: 1px solid #dc3545;"></div>Public Loves</div>
+            <div class="legend-item"><div class="legend-color" style="background: #fff176; border: 1px solid #f9a825;"></div>My Target</div>
+            <div class="legend-item"><div class="legend-color" style="background: #555;"></div>Taken / Don't Draft</div>
+            <div class="legend-item" style="margin-left: 8px; opacity: 0.7; font-size: 9px;">Shift+Click = Gray | DblClick = Yellow</div>
+            <div class="legend-item" style="margin-left: 8px;"><span class="flag-badge flag-s">S</span>Sleeper</div>
+            <div class="legend-item"><span class="flag-badge flag-t">T</span>Target</div>
+            <div class="legend-item"><span class="flag-badge flag-v">V</span>Value</div>
+            <div class="legend-item"><span class="flag-badge flag-b">B</span>Bust</div>
+            <div class="legend-item"><span class="flag-badge flag-i">I</span>Injured</div>
+            <div class="legend-item"><span class="flag-badge flag-a">A</span>Avoid</div>
+        </div>
+
+        <div class="draft-board">
+            <table id="draft-table">
+                <thead>
+                    <tr class="pos-header">
+                        <th class="label-hdr" colspan="2"></th>
+                        <th class="pos-rb" colspan="2">Running Back</th>
+                        <th class="pos-wr" colspan="2">Wide Receiver</th>
+                        <th class="pos-te" colspan="2">Tight End</th>
+                        <th class="pos-qb" colspan="2">Quarterback</th>
+                        <th class="pos-dst" colspan="2">Defense</th>
+                        <th class="pos-k" colspan="2">Kicker</th>
+                    </tr>
+                    <tr>
+                        <th style="width:35px;">Round</th>
+                        <th style="width:40px;">Rank</th>
+                        <th class="col-rb">Player</th><th style="width:35px;">ADP</th>
+                        <th class="col-wr">Player</th><th style="width:35px;">ADP</th>
+                        <th class="col-te">Player</th><th style="width:35px;">ADP</th>
+                        <th class="col-qb">Player</th><th style="width:35px;">ADP</th>
+                        <th class="col-dst">Player</th><th style="width:35px;">ADP</th>
+                        <th>Player</th><th style="width:35px;">ADP</th>
+                    </tr>
+                </thead>
+                <tbody id="draft-body"></tbody>
+            </table>
+        </div>
+
+        <div class="notes-section">
+            <div class="notes-grid">
+                <div class="note-card">
+                    <h4>Sentiment Colors</h4>
+                    <ul>
+                        <li><strong>Green:</strong> Experts love (ADP &lt; Public)</li>
+                        <li><strong>Yellow:</strong> Experts & Public agree</li>
+                        <li><strong>Red:</strong> Public loves (ADP &gt; Experts)</li>
+                    </ul>
+                </div>
+                <div class="note-card">
+                    <h4>Player Tags</h4>
+                    <ul>
+                        <li><strong>S</strong> = Sleeper | <strong>T</strong> = Target</li>
+                        <li><strong>V</strong> = Value | <strong>B</strong> = Bust</li>
+                        <li><strong>I</strong> = Injured | <strong>A</strong> = Avoid</li>
+                    </ul>
+                </div>
+                <div class="note-card">
+                    <h4>Starters</h4>
+                    <ul>
+                        <li>QB, RB, RB, WR, WR, TE, Flex, K, DST</li>
+                        <li>My Team picks have gold left border</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const csvData = `Round,Avg Rank,Auction Value,RB,WR,TE,QB,DST,K
+1,1.0,$62,Jahmyr Gibbs DET 1.01,,,,,Josh Allen BUF 2.07
+1,2.5,$61,Bijan Robinson ATL 1.02,,,,,,,
+1,2.5,$55,Ja'Marr Chase CIN 1.03,,,,,,,,,,
+1,4.5,$50,Jonathan Taylor IND A 1.05,Puka Nacua LAR 1.07,,,,,,
+1,6.5,$45,Christian McCaffrey SF 1.04,Jaxon Smith-Njigba SEA 1.08,,,,,,
+1,8.5,$41,James Cook BUF 1.06,Amon-Ra St. Brown DET 1.12,,,,,,
+1,10.5,$39,Derrick Henry BAL 1.11,CeeDee Lamb DAL 2.03,,,,,,
+1,12.5,$37,Saquon Barkley PHI T 1.10,Justin Jefferson MIN 2.05,,,,,,
+2,14.5,$35,Ashton Jeanty LV 1.10,Drake London ATL 2.10,,,,,,
+2,16.5,$33,Devon Achane MIA B 1.09,Nico Collins HOU 3.03,,,,,,
+2,18.5,$31,Kenneth Walker KC 2.11,,,,,,,
+2,20.0,$30,Omarion Hampton LAC 2.01,A.J. Brown NE 3.01,Brock Bowers LV 2.08,,,
+2,23.0,$28,Chase Brown CIN 2.06,George Pickens DAL 3.05,Trey McBride ARI 3.02,,,
+2,26.0,$26,Josh Jacobs GB 2.12,Rashee Rice KC 3.11,,,,,,
+2,28.0,$25,Kyren Williams LAR 2.09,,,,,,,
+2,29.5,$25,Jeremiah Love ARI 2.04,Chris Olave NO 3.08,,,,,,
+3,31.5,$24,Javonte Williams DAL 3.10,Malik Nabers NYG 3.04,,,,,,
+3,33.5,$23,Zay Flowers BAL T 5.01,,Lamar Jackson BAL 3.09,,,
+3,36.0,$22,Breece Hall NYJ 3.06,Tee Higgins CIN 4.04,Colston Loveland CHI 4.12,Drake Maye NE A 5.07,,
+3,38.5,$21,DeVonta Smith PHI 4.02,,,,,,,
+4,40.0,$20,Tetairoa McMillan CAR 4.05,,,,,,,
+4,41.5,$20,Travis Etienne NO 4.01,Ege Egbuka TB 5.02,,,,,,
+4,43.5,$19,Cam Skattebo NYG 4.07,Garrett Wilson NYJ 4.06,,,,,,
+4,45.0,$19,Davante Adams LAR 5.04,,,,,,,
+4,46.5,$19,Jaylen Waddle DEN 4.11,,,,,,,
+4,46.5,$18,Ladd McConkey LAC 4.03,Tyler Warren IND A 5.12,Joe Burrow CIN 6.03,,,
+4,49.0,$18,Jameson Williams DET 5.08,Jayden Daniels WAS T 6.06,,,
+4,49.0,$17,Quinshon Judkins CLE 4.10,Terry McLaurin WAS 5.11,,,,,,
+5,52.0,$17,D'Andre Swift CHI 5.06,Luther Burden CHI A 4.09,,,,,,
+5,54.0,$16,Bucky Irving TB 3.07,Christian Watson GB 6.08,,,,,,
+5,55.5,$16,Mike Evans SF 6.04,Tucker Kraft GB I 7.02,Jalen Hurts PHI 6.12,,
+5,57.5,$16,David Montgomery HOU 5.03,Rome Odunze CHI 7.09,,,,,,
+5,60.5,$15,TreVeyon Henderson NE 4.08,D.J. Moore BUF 6.01,,,,,,
+5,64.0,$14,Bhayshul Tuten JAC 5.05,Harold Fannin CLE 6.09,Caleb Williams CHI 8.07,Trevor Lawrence JAC 8.06,,
+6,66.5,$14,Jadarian Price SEA 8.10,DK Metcalf PIT 7.06,Justin Herbert LAC 8.06,Dak Prescott DAL 9.06,,
+6,69.0,$13,Tony Pollard TEN 6.11,,,,,,,
+6,71.0,$13,Jaylen Warren PIT 6.02,Marvin Harrison Jr ARI 7.10,Kyle Pitts ATL B 7.04,,,
+6,72.0,$13,Parker Washington JAC 8.04,George Kittle SF 9.12,Jaxson Dart NYG B 8.08,Brock Purdy SF 10.11,,
+7,75.5,$12,Rhamondre Stevenson NE 6.07,Alec Pierce IND I 9.03,,,,,,
+7,77.0,$12,Rico Dowdle PIT 7.01,Brian Thomas Jr JAC 7.07,,,,,,
+7,78.5,$11,Carnell Tate TEN 6.05,Courtland Sutton DEN 7.08,,,,,,
+7,80.5,$11,Chuba Hubbard CAR 5.10,Quentin Johnston LAC 10.10,,,,,,
+7,83.5,$11,J.K. Dobbins DEN 7.11,,,,,,,
+8,87.5,$10,Blake Corum LAR 7.12,Jordan Tyson NO 7.05,Patrick Mahomes KC I 10.02,,,
+8,90.5,$10,Kyle Monangai CHI 7.03,Jordan Addison MIN 9.10,,,,,,
+9,92.5,$9,Jacory Croskey-Merritt WAS 9.09,Michael Wilson ARI B 8.01,Matthew Stafford LAR 11.01,Bo Nix DEN S 11.08,Jared Goff DET 12.06
+9,95.0,$9,RJ Harvey DEN 5.09,Jayden Reed GB S 11.07,Mark Andrews BAL 10.07,,,
+9,98.0,$8,Jonathon Brooks CAR 9.05,Xavier Worthy KC 12.03,Travis Kelce KC 10.06,,,
+9,101.5,$8,Jordan Mason MIN 11.02,Chris Godwin TB 9.01,Dalton Kincaid BUF T 8.12,,,
+10,105.5,$7,Kenneth Gainwell TB 9.02,Michael Pittman PIT 10.05,Kyler Murray MIN V 14.11,,,
+10,109.0,$7,Rachaad White WAS S 9.04,Makai Lemon PHI 8.03,C.J. Stroud HOU 12.02,,,
+10,111.0,$7,Aaron Jones MIN 9.08,Josh Downs IND 12.07,Baker Mayfield TB 13.08,,,
+10,112.5,$6,Chris Rodriguez JAC I 14.04,Jakobi Meyers JAC 8.09,Jordan Love GB 12.08,,,
+10,115.0,$6,Matthew Golden GB 14.12,Dallas Goedert PHI 9.11,Sam Darnold SEA 12.05,,,
+11,120.0,$5,Isaiah Likely NYG 10.12,Hunter Henry NE 8.02,Malik Willis MIA 14.01,,,
+11,122.0,$5,Romeo Doubs NE 11.11,,,,Tyler Shough NO 14.02,,,
+11,127.0,$5,Jalen Coker CAR 13.07,,,,,,,
+11,129.5,$4,Jayden Higgins HOU 12.12,,,,,,,
+11,131.0,$4,Rashid Shaheed SEA V 15.04,Jake Ferguson DAL 10.01,Daniel Jones IND 14.08,,,
+11,132.5,$4,Woody Marks HOU 11.05,KC Concepcion CLE 15.03,,,,,,
+11,135.0,$4,Isiah Pacheco DET 11.09,,,,,,,
+11,137.0,$4,Tyrone Tracy NYG V 11.04,Wan'Dale Robinson TEN 10.09,,,,,,
+12,139.5,$3,Zach Charbonnet SEA I 11.03,Deebo Samuel SF,,,,,,
+12,142.0,$3,Brenton Strange JAC S 11.06,Brandon Aubrey DAL 13.04,,,,,,`;
+
+        var POS_KEYS = ['rb','wr','te','qb','dst','k'];
+        var draftData = [];
+        var dragSrc = null;
+        var STORAGE_KEY = 'peaked-cheatsheet-2026';
+        var fileHandle = null;
+        var autoSaveTimer = null;
+
+        function saveData() {
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(draftData)); } catch(e) {}
+        }
+
+        function loadData() {
+            try {
+                var saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) return JSON.parse(saved);
+            } catch(e) {}
+            return null;
+        }
+
+        function resetData() {
+            draftData = parseCSV(csvData);
+            saveData();
+            autoSaveToFile();
+            render();
+        }
+
+        function updateStatus(msg) {
+            var el = document.getElementById('save-status');
+            if (el) el.textContent = msg;
+        }
+
+        function scheduleAutoSave() {
+            clearTimeout(autoSaveTimer);
+            autoSaveTimer = setTimeout(function() { autoSaveToFile(); }, 300);
+        }
+
+        async function autoSaveToFile() {
+            saveData();
+            if (!fileHandle) return;
+            try {
+                var perm = await fileHandle.requestPermission({ mode: 'readwrite' });
+                if (perm !== 'granted') return;
+                var writable = await fileHandle.createWritable();
+                await writable.write(JSON.stringify(draftData, null, 2));
+                await writable.close();
+                updateStatus('Saved');
+                setTimeout(function() { updateStatus(''); }, 2000);
+            } catch(e) {
+                updateStatus('Save failed');
+            }
+        }
+
+        async function connectFile() {
+            try {
+                var handle = await window.showSaveFilePicker({
+                    suggestedName: 'peaked-cheatsheet-2026.json',
+                    types: [{ description: 'JSON', accept: { 'application/json': ['.json'] } }]
+                });
+                fileHandle = handle;
+                await storeFileHandle(handle);
+                await autoSaveToFile();
+                document.getElementById('connect-btn').textContent = 'File Connected';
+            } catch(e) {
+                if (e.name !== 'AbortError') {
+                    alert('Could not connect file: ' + e.message);
+                }
+            }
+        }
+
+        async function storeFileHandle(handle) {
+            try {
+                var db = await new Promise(function(resolve, reject) {
+                    var req = indexedDB.open('peaked-cheatsheet-db', 1);
+                    req.onupgradeneeded = function(e) { e.target.result.createObjectStore('handles'); };
+                    req.onsuccess = function(e) { resolve(e.target.result); };
+                    req.onerror = function(e) { reject(e.target.error); };
+                });
+                var tx = db.transaction('handles', 'readwrite');
+                tx.objectStore('handles').put(handle, 'fileHandle');
+            } catch(e) {}
+        }
+
+        async function restoreFileHandle() {
+            try {
+                var db = await new Promise(function(resolve, reject) {
+                    var req = indexedDB.open('peaked-cheatsheet-db', 1);
+                    req.onupgradeneeded = function(e) { e.target.result.createObjectStore('handles'); };
+                    req.onsuccess = function(e) { resolve(e.target.result); };
+                    req.onerror = function(e) { reject(e.target.error); };
+                });
+                var handle = await new Promise(function(resolve, reject) {
+                    var tx = db.transaction('handles', 'readonly');
+                    var req = tx.objectStore('handles').get('fileHandle');
+                    req.onsuccess = function() { resolve(req.result); };
+                    req.onerror = function(e) { reject(e.target.error); };
+                });
+                if (handle) {
+                    var perm = await handle.requestPermission({ mode: 'readwrite' });
+                    if (perm === 'granted') {
+                        fileHandle = handle;
+                        document.getElementById('connect-btn').textContent = 'File Connected';
+                    }
+                }
+            } catch(e) {}
+        }
+
+        function parsePlayerCell(cell) {
+            if (!cell || cell.trim() === '') return null;
+            var parts = cell.trim().split(/\s+/);
+            if (parts.length < 2) return { name: cell, team: '', flag: '', adp: '' };
+            var name = '', team = '', flag = '', adp = '';
+            var teamIdx = -1;
+            for (var i = 0; i < parts.length; i++) {
+                if (/^[A-Z]{2,3}$/.test(parts[i]) && !/^[SIOT]$/.test(parts[i])) {
+                    teamIdx = i; team = parts[i]; break;
+                }
+            }
+            if (teamIdx > 0) { name = parts.slice(0, teamIdx).join(' '); }
+            else { name = parts[0]; }
+            var afterTeam = parts.slice(teamIdx + 1);
+            if (afterTeam.length > 0) {
+                if (/^[A-Z]$/.test(afterTeam[0]) && afterTeam.length > 1 && /\d/.test(afterTeam[1])) {
+                    flag = afterTeam[0];
+                    adp = afterTeam.slice(1).join(' ');
+                } else {
+                    adp = afterTeam.join(' ');
+                }
+            }
+            return { name: name, team: team, flag: flag, adp: adp };
+        }
+
+        function parseCSV(csv) {
+            var lines = csv.trim().split('\n');
+            var data = [];
+            for (var i = 1; i < lines.length; i++) {
+                var parts = lines[i].split(',');
+                var round = parseInt(parts[0]);
+                var rank = parts[1];
+                var value = parts[2];
+                var rb = parsePlayerCell(parts[3] || '');
+                var wr = parsePlayerCell(parts[4] || '');
+                var te = parsePlayerCell(parts[5] || '');
+                var qb = parsePlayerCell(parts[6] || '');
+                var dst = parsePlayerCell(parts[7] || '');
+                var k = parsePlayerCell(parts[8] || '');
+                data.push({ round: round, rank: rank, value: value, rb: rb, wr: wr, te: te, qb: qb, dst: dst, k: k });
+            }
+            return data;
+        }
+
+        function flagHtml(f) {
+            if (!f) return '';
+            return '<span class="flag-badge flag-' + f.toLowerCase() + '">' + f + '</span>';
+        }
+
+        function playerHtml(p, ri, pos) {
+            var name = p ? (p.name || '') : '';
+            var team = p ? (', ' + (p.team || '')) : '';
+            var flag = p ? flagHtml(p.flag) : '';
+            var adp = p ? (p.adp || '') : '';
+            var cls = '';
+            if (p && p.gray) cls = ' cell-grayed';
+            else if (p && p.yellow) cls = ' cell-yellow';
+            return '<td class="slot-group pick-player' + cls + '" draggable="true" data-ri="' + ri + '" data-pos="' + pos + '">' + name + team + ' ' + flag + '</td>' +
+                   '<td class="slot-group pick-adp' + cls + '" draggable="true" data-ri="' + ri + '" data-pos="' + pos + '">' + adp + '</td>';
+        }
+
+        function render() {
+            var tbody = document.getElementById('draft-body');
+            var html = '';
+
+            var roundGroups = [];
+            var currentRound = null;
+            var currentGroup = null;
+            for (var i = 0; i < draftData.length; i++) {
+                if (draftData[i].round !== currentRound) {
+                    currentRound = draftData[i].round;
+                    currentGroup = { round: currentRound, rows: [], startIdx: i };
+                    roundGroups.push(currentGroup);
+                }
+                currentGroup.rows.push(i);
+            }
+
+            for (var g = 0; g < roundGroups.length; g++) {
+                var group = roundGroups[g];
+                for (var r = 0; r < group.rows.length; r++) {
+                    var ri = group.rows[r];
+                    var row = draftData[ri];
+                    html += '<tr>';
+                    if (r === 0) {
+                        html += '<td class="round-cell" rowspan="' + group.rows.length + '">' + group.round + '</td>';
+                    }
+                    html += '<td class="rank-cell">' + row.rank + '</td>';
+                    html += playerHtml(row.rb, ri, 'rb');
+                    html += playerHtml(row.wr, ri, 'wr');
+                    html += playerHtml(row.te, ri, 'te');
+                    html += playerHtml(row.qb, ri, 'qb');
+                    html += playerHtml(row.dst, ri, 'dst');
+                    html += playerHtml(row.k, ri, 'k');
+                    html += '</tr>';
+                }
+            }
+
+            tbody.innerHTML = html;
+            bindDragEvents();
+        }
+
+        function bindDragEvents() {
+            var slots = document.querySelectorAll('.slot-group');
+            slots.forEach(function(slot) {
+                slot.addEventListener('dragstart', function(e) {
+                    dragSrc = { ri: parseInt(this.dataset.ri), pos: this.dataset.pos };
+                    this.classList.add('dragging');
+                    e.dataTransfer.effectAllowed = 'move';
+                    e.dataTransfer.setData('text/plain', '');
+                });
+
+                slot.addEventListener('dragend', function() {
+                    this.classList.remove('dragging');
+                    document.querySelectorAll('.drag-over').forEach(function(el) {
+                        el.classList.remove('drag-over');
+                    });
+                });
+
+                slot.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = 'move';
+                    this.classList.add('drag-over');
+                });
+
+                slot.addEventListener('dragleave', function() {
+                    this.classList.remove('drag-over');
+                });
+
+                slot.addEventListener('click', function(e) {
+                    if (!e.shiftKey) return;
+                    var ri = parseInt(this.dataset.ri);
+                    var pos = this.dataset.pos;
+                    var player = draftData[ri][pos];
+                    if (!player) return;
+                    player.gray = player.gray ? undefined : true;
+                    scheduleAutoSave();
+                    render();
+                });
+
+                slot.addEventListener('dblclick', function() {
+                    var ri = parseInt(this.dataset.ri);
+                    var pos = this.dataset.pos;
+                    var player = draftData[ri][pos];
+                    if (!player) return;
+                    player.yellow = player.yellow ? undefined : true;
+                    scheduleAutoSave();
+                    render();
+                });
+
+                slot.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.classList.remove('drag-over');
+                    if (!dragSrc) return;
+
+                    var targetRi = parseInt(this.dataset.ri);
+                    var targetPos = this.dataset.pos;
+
+                    var srcRow = draftData[dragSrc.ri];
+                    var targetRow = draftData[targetRi];
+                    var srcPlayer = srcRow[dragSrc.pos];
+                    var targetPlayer = targetRow[targetPos];
+
+                    srcRow[dragSrc.pos] = targetPlayer;
+                    targetRow[targetPos] = srcPlayer;
+
+                    dragSrc = null;
+                    scheduleAutoSave();
+                    render();
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            var loaded = false;
+
+            try {
+                var resp = await fetch('peaked-cheatsheet-2026.json');
+                if (resp.ok) {
+                    draftData = await resp.json();
+                    saveData();
+                    loaded = true;
+                }
+            } catch(e) {}
+
+            if (!loaded) {
+                draftData = loadData() || parseCSV(csvData);
+            }
+
+            render();
+            await restoreFileHandle();
+        });
+    </script>
+</body>
+</html>

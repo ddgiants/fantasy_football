@@ -1,0 +1,4 @@
+Auto-load on page load (line ~510): Tries fetch('peaked-cheatsheet-2026.json') from the same directory first. Falls back to localStorage, then the built-in CSV data. Note: fetch() only works when served over HTTP (e.g., python -m http.server), not when opening the HTML file directly via file://.
+Auto-save on every change (line ~300): All mutations (shift-click gray, double-click yellow, drag-drop) now go through scheduleAutoSave() which debounces 300ms then writes to both localStorage and the file on disk.
+Connect File button: Replaces the old Save/Load buttons. One-time click prompts you to pick peaked-cheatsheet-2026.json via the browser's File System Access API. The file handle is persisted in IndexedDB so subsequent page loads auto-restore the connection (it shows "File Connected"). After that, every change auto-saves to disk.
+To serve locally (for auto-load to work):
