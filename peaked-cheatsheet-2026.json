@@ -288,7 +288,8 @@
       "name": "Trey McBride",
       "team": "ARI",
       "flag": "",
-      "adp": "3.02"
+      "adp": "3.02",
+      "yellow": true
     },
     "qb": null,
     "dst": null,
