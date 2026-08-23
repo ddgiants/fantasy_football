@@ -18,7 +18,7 @@
         .legend-item { display: flex; align-items: center; gap: 3px; font-weight: 600; }
         .legend-color { width: 12px; height: 12px; border-radius: 2px; }
 
-        .draft-board { overflow-x: auto; }
+        .draft-board { overflow: auto; max-height: calc(100vh - 170px); }
         table { width: 100%; border-collapse: collapse; font-size: 10px;  }
 
         .pos-header th { background: #34495e; color: white; padding: 6px 2px; text-align: center; font-weight: 700; font-size: 11px; }
@@ -31,7 +31,7 @@
         .pos-k { background: #9b59b6 !important; }
 
         thead tr:nth-child(2) th { background: #2c3e50; color: white; padding: 4px 2px; text-align: center; font-weight: 600; font-size: 9px; }
-        thead th { position: sticky; top: 0; z-index: 10; }
+        thead { position: sticky; top: 0; z-index: 10; }
 
         tbody td { padding: 4px 2px; text-align: center; vertical-align: middle; border: 1px solid #e0e0e0; font-size: 12px; }
 
@@ -43,9 +43,13 @@
         .pick-team { text-align: center; color: #666; font-size: 9px; }
         .pick-flag { text-align: center; }
         .pick-adp { text-align: center; color: #888; font-size: 9px; }
+        .pick-rank { color: #999; font-size: 9px; font-weight: 600; margin-left: 3px; white-space: nowrap; }
+        .cell-grayed .pick-rank { color: inherit; }
 
+        .turn-row td:not(.round-cell) { background: #cfe6ff; border: 1px solid #9dc3e6; }
         .cell-grayed { background: #555 !important; color: #bbb !important; }
         .cell-yellow { background: #fff176 !important; }
+        .cell-blue { background: #64b5f6 !important; }
         .slot-group { cursor: grab; }
         .slot-group:active { cursor: grabbing; }
         .slot-group.dragging { opacity: 0.4; }
@@ -400,10 +404,12 @@
             var team = p ? (', ' + (p.team || '')) : '';
             var flag = p ? flagHtml(p.flag) : '';
             var adp = p ? (p.adp || '') : '';
+            var rank = p ? ('<span class="pick-rank">#' + (p.rank !== undefined ? p.rank : draftData[ri].rank) + '</span>') : '';
             var cls = '';
             if (p && p.gray) cls = ' cell-grayed';
             else if (p && p.yellow) cls = ' cell-yellow';
-            return '<td class="slot-group pick-player' + cls + '" draggable="true" data-ri="' + ri + '" data-pos="' + pos + '">' + name + team + ' ' + flag + '</td>' +
+            else if (p && p.blue) cls = ' cell-blue';
+            return '<td class="slot-group pick-player' + cls + '" draggable="true" data-ri="' + ri + '" data-pos="' + pos + '">' + name + team + ' ' + flag + ' ' + rank + '</td>' +
                    '<td class="slot-group pick-adp' + cls + '" draggable="true" data-ri="' + ri + '" data-pos="' + pos + '">' + adp + '</td>';
         }
 
@@ -428,7 +434,9 @@
                 for (var r = 0; r < group.rows.length; r++) {
                     var ri = group.rows[r];
                     var row = draftData[ri];
-                    html += '<tr>';
+                    var isTurn = (group.round % 2 === 1 && r === group.rows.length - 1) ||
+                                 (group.round % 2 === 0 && r === 0);
+                    html += '<tr' + (isTurn ? ' class="turn-row"' : '') + '>';
                     if (r === 0) {
                         html += '<td class="round-cell" rowspan="' + group.rows.length + '">' + group.round + '</td>';
                     }
@@ -480,7 +488,7 @@
                     var pos = this.dataset.pos;
                     var player = draftData[ri][pos];
                     if (!player) return;
-                    player.gray = player.gray ? undefined : true;
+                    player.yellow = player.yellow ? undefined : true;
                     scheduleAutoSave();
                     render();
                 });
@@ -490,7 +498,18 @@
                     var pos = this.dataset.pos;
                     var player = draftData[ri][pos];
                     if (!player) return;
-                    player.yellow = player.yellow ? undefined : true;
+                    player.gray = player.gray ? undefined : true;
+                    scheduleAutoSave();
+                    render();
+                });
+
+                slot.addEventListener('click', function(e) {
+                    if (!e.metaKey) return;
+                    var ri = parseInt(this.dataset.ri);
+                    var pos = this.dataset.pos;
+                    var player = draftData[ri][pos];
+                    if (!player) return;
+                    player.blue = player.blue ? undefined : true;
                     scheduleAutoSave();
                     render();
                 });

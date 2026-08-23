@@ -34,7 +34,8 @@
     "wr": {
       "name": "Ja'Marr Chase",
       "team": "CIN",
-      "flag": ""
+      "flag": "",
+      "yellow": true
     },
     "te": null,
     "qb": null,
@@ -173,8 +174,7 @@
     "rb": {
       "name": "Kenneth Walker III",
       "team": "KC",
-      "flag": "",
-      "yellow": true
+      "flag": ""
     },
     "wr": null,
     "te": null,
@@ -188,8 +188,7 @@
     "rb": {
       "name": "Ashton Jeanty",
       "team": "LV",
-      "flag": "",
-      "blue": true
+      "flag": ""
     },
     "wr": null,
     "te": null,
@@ -203,8 +202,7 @@
     "rb": {
       "name": "Chase Brown",
       "team": "CIN",
-      "flag": "",
-      "yellow": true
+      "flag": ""
     },
     "wr": null,
     "te": null,
@@ -246,8 +244,7 @@
     "rb": {
       "name": "Omarion Hampton",
       "team": "LAC",
-      "flag": "",
-      "gray": true
+      "flag": ""
     },
     "wr": null,
     "te": null,
@@ -458,8 +455,7 @@
     "wr": {
       "name": "Jaylen Waddle",
       "team": "DEN",
-      "flag": "",
-      "yellow": true
+      "flag": ""
     },
     "te": null,
     "qb": null,
@@ -529,8 +525,7 @@
     "wr": {
       "name": "Emeka Egbuka",
       "team": "TB",
-      "flag": "",
-      "yellow": true
+      "flag": ""
     },
     "te": null,
     "qb": null,
@@ -558,8 +553,7 @@
     "wr": {
       "name": "Tetairoa McMillan",
       "team": "CAR",
-      "flag": "",
-      "blue": true
+      "flag": ""
     },
     "te": null,
     "qb": null,
@@ -808,7 +802,11 @@
     "round": 5,
     "rank": 58,
     "rb": null,
-    "wr": null,
+    "wr": {
+      "name": "Mike Evans",
+      "team": "SF",
+      "flag": ""
+    },
     "te": null,
     "qb": null,
     "dst": null,
@@ -836,11 +834,7 @@
       "team": "TB",
       "flag": ""
     },
-    "wr": {
-      "name": "Mike Evans",
-      "team": "SF",
-      "flag": ""
-    },
+    "wr": null,
     "te": null,
     "qb": null,
     "dst": null,
@@ -855,8 +849,7 @@
     "qb": {
       "name": "Drake Maye",
       "team": "NE",
-      "flag": "",
-      "blue": true
+      "flag": ""
     },
     "dst": null,
     "k": null
@@ -898,12 +891,7 @@
       "flag": ""
     },
     "wr": null,
-    "te": {
-      "name": "Harold Fannin Jr.",
-      "team": "CLE",
-      "flag": "",
-      "yellow": true
-    },
+    "te": null,
     "qb": null,
     "dst": null,
     "k": null
@@ -928,8 +916,7 @@
     "rb": {
       "name": "Jadarian Price",
       "team": "SEA",
-      "flag": "",
-      "yellow": true
+      "flag": ""
     },
     "wr": null,
     "te": null,
@@ -944,8 +931,7 @@
     "wr": {
       "name": "Marvin Harrison Jr.",
       "team": "ARI",
-      "flag": "",
-      "gray": true
+      "flag": ""
     },
     "te": null,
     "qb": null,
@@ -1111,7 +1097,11 @@
     "rank": 79,
     "rb": null,
     "wr": null,
-    "te": null,
+    "te": {
+      "name": "Harold Fannin Jr.",
+      "team": "CLE",
+      "flag": ""
+    },
     "qb": null,
     "dst": null,
     "k": null
@@ -1197,12 +1187,7 @@
     },
     "te": null,
     "qb": null,
-    "dst": {
-      "name": "Jordyn Brooks",
-      "team": "or Jack Campbell",
-      "flag": "",
-      "yellow": true
-    },
+    "dst": null,
     "k": null
   },
   {
@@ -1226,8 +1211,7 @@
     "wr": {
       "name": "Michael Wilson",
       "team": "ARI",
-      "flag": "",
-      "gray": true
+      "flag": ""
     },
     "te": null,
     "qb": null,
@@ -1241,8 +1225,7 @@
     "wr": {
       "name": "Quentin Johnston",
       "team": "LAC",
-      "flag": "",
-      "blue": true
+      "flag": ""
     },
     "te": null,
     "qb": null,
@@ -1398,8 +1381,7 @@
     "qb": {
       "name": "Bo Nix",
       "team": "DEN",
-      "flag": "",
-      "yellow": true
+      "flag": ""
     },
     "dst": null,
     "k": null
