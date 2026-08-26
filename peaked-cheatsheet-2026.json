@@ -5,7 +5,8 @@
     "rb": {
       "name": "Jahmyr Gibbs",
       "team": "DET",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "wr": null,
     "te": null,
@@ -19,7 +20,8 @@
     "rb": {
       "name": "Bijan Robinson",
       "team": "ATL",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "wr": null,
     "te": null,
@@ -34,7 +36,8 @@
     "wr": {
       "name": "Ja'Marr Chase",
       "team": "CIN",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -48,7 +51,8 @@
     "wr": {
       "name": "Puka Nacua",
       "team": "LAR",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -61,7 +65,8 @@
     "rb": {
       "name": "Christian McCaffrey",
       "team": "SF",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "wr": null,
     "te": null,
@@ -76,7 +81,8 @@
     "wr": {
       "name": "Amon-Ra St. Brown",
       "team": "DET",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -90,7 +96,8 @@
     "wr": {
       "name": "Jaxon Smith-Njigba",
       "team": "SEA",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -103,7 +110,8 @@
     "rb": {
       "name": "Jonathan Taylor",
       "team": "IND",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "wr": null,
     "te": null,
@@ -118,7 +126,8 @@
     "wr": {
       "name": "CeeDee Lamb",
       "team": "DAL",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -131,7 +140,8 @@
     "rb": {
       "name": "James Cook III",
       "team": "BUF",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "wr": null,
     "te": null,
@@ -145,7 +155,8 @@
     "rb": {
       "name": "Saquon Barkley",
       "team": "PHI",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "wr": null,
     "te": null,
@@ -160,7 +171,8 @@
     "wr": {
       "name": "Justin Jefferson",
       "team": "MIN",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -174,7 +186,8 @@
       "name": "Kenneth Walker III",
       "team": "KC",
       "flag": "",
-      "yellow": true
+      "yellow": true,
+      "gray": true
     },
     "wr": null,
     "te": null,
@@ -189,7 +202,8 @@
       "name": "Ashton Jeanty",
       "team": "LV",
       "flag": "",
-      "blue": true
+      "blue": true,
+      "gray": true
     },
     "wr": null,
     "te": null,
@@ -204,7 +218,8 @@
       "name": "Chase Brown",
       "team": "CIN",
       "flag": "",
-      "yellow": true
+      "yellow": true,
+      "gray": true
     },
     "wr": null,
     "te": null,
@@ -218,7 +233,8 @@
     "rb": {
       "name": "De'Von Achane",
       "team": "MIA",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "wr": null,
     "te": null,
@@ -233,7 +249,8 @@
     "wr": {
       "name": "Drake London",
       "team": "ATL",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -261,7 +278,8 @@
     "rb": {
       "name": "Derrick Henry",
       "team": "BAL",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "wr": null,
     "te": null,
@@ -277,7 +295,8 @@
     "te": {
       "name": "Brock Bowers",
       "team": "LV",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "qb": null,
     "dst": null,
@@ -290,7 +309,8 @@
     "wr": {
       "name": "Nico Collins",
       "team": "HOU",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -304,7 +324,8 @@
     "wr": {
       "name": "George Pickens",
       "team": "DAL",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -318,7 +339,8 @@
     "wr": {
       "name": "A.J. Brown",
       "team": "NE",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -332,7 +354,8 @@
     "wr": {
       "name": "Malik Nabers",
       "team": "NYG",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -346,7 +369,8 @@
     "wr": {
       "name": "DeVonta Smith",
       "team": "PHI",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -359,7 +383,8 @@
     "rb": {
       "name": "Jeremiyah Love",
       "team": "ARI",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "wr": null,
     "te": null,
@@ -373,7 +398,8 @@
     "rb": {
       "name": "Breece Hall",
       "team": "NYJ",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "wr": null,
     "te": null,
@@ -390,7 +416,8 @@
     "qb": {
       "name": "Josh Allen",
       "team": "BUF",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "dst": null,
     "k": null
@@ -402,7 +429,8 @@
     "wr": {
       "name": "Tee Higgins",
       "team": "CIN",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -416,7 +444,8 @@
     "wr": {
       "name": "Zay Flowers",
       "team": "BAL",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -429,7 +458,8 @@
     "rb": {
       "name": "Kyren Williams",
       "team": "LAR",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "wr": null,
     "te": null,
@@ -445,7 +475,8 @@
     "te": {
       "name": "Trey McBride",
       "team": "ARI",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "qb": null,
     "dst": null,
@@ -459,7 +490,8 @@
       "name": "Jaylen Waddle",
       "team": "DEN",
       "flag": "",
-      "yellow": true
+      "yellow": true,
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -473,7 +505,9 @@
     "wr": {
       "name": "Chris Olave",
       "team": "NO",
-      "flag": ""
+      "flag": "",
+      "blue": true,
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -487,7 +521,8 @@
     "wr": {
       "name": "Rashee Rice",
       "team": "KC",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -500,7 +535,8 @@
     "rb": {
       "name": "Javonte Williams",
       "team": "DAL",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "wr": null,
     "te": null,
@@ -514,7 +550,8 @@
     "rb": {
       "name": "Josh Jacobs",
       "team": "GB",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "wr": null,
     "te": null,
@@ -530,7 +567,8 @@
       "name": "Emeka Egbuka",
       "team": "TB",
       "flag": "",
-      "yellow": true
+      "yellow": true,
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -545,7 +583,8 @@
     "te": {
       "name": "Colston Loveland",
       "team": "CHI",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "qb": null,
     "dst": null,
@@ -559,7 +598,8 @@
       "name": "Tetairoa McMillan",
       "team": "CAR",
       "flag": "",
-      "blue": true
+      "blue": true,
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -573,7 +613,8 @@
     "wr": {
       "name": "Ladd McConkey",
       "team": "LAC",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -587,7 +628,8 @@
     "wr": {
       "name": "Garrett Wilson",
       "team": "NYJ",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -600,7 +642,8 @@
     "rb": {
       "name": "D'Andre Swift",
       "team": "CHI",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "wr": null,
     "te": null,
@@ -614,7 +657,8 @@
     "rb": {
       "name": "Travis Etienne Jr.",
       "team": "NO",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "wr": null,
     "te": null,
@@ -629,7 +673,8 @@
     "wr": {
       "name": "Terry McLaurin",
       "team": "WAS",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -643,7 +688,8 @@
     "wr": {
       "name": "Luther Burden III",
       "team": "CHI",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -656,7 +702,8 @@
     "rb": {
       "name": "Cam Skattebo",
       "team": "NYG",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "wr": null,
     "te": null,
@@ -672,7 +719,8 @@
     "te": {
       "name": "Tyler Warren",
       "team": "IND",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "qb": null,
     "dst": null,
@@ -687,7 +735,8 @@
     "qb": {
       "name": "Lamar Jackson",
       "team": "BAL",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "dst": null,
     "k": null
@@ -698,7 +747,8 @@
     "rb": {
       "name": "David Montgomery",
       "team": "HOU",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "wr": null,
     "te": null,
@@ -713,7 +763,8 @@
     "wr": {
       "name": "DJ Moore",
       "team": "BUF",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -726,7 +777,8 @@
     "rb": {
       "name": "Quinshon Judkins",
       "team": "CLE",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "wr": null,
     "te": null,
@@ -741,7 +793,8 @@
     "wr": {
       "name": "Rome Odunze",
       "team": "CHI",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -755,7 +808,8 @@
     "wr": {
       "name": "Christian Watson",
       "team": "GB",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -769,7 +823,8 @@
     "wr": {
       "name": "Jameson Williams",
       "team": "DET",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -783,7 +838,8 @@
     "wr": {
       "name": "Davante Adams",
       "team": "LAR",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -796,7 +852,8 @@
     "rb": {
       "name": "Bhayshul Tuten",
       "team": "JAC",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "wr": null,
     "te": null,
@@ -834,12 +891,14 @@
     "rb": {
       "name": "Bucky Irving",
       "team": "TB",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "wr": {
       "name": "Mike Evans",
       "team": "SF",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -856,7 +915,7 @@
       "name": "Drake Maye",
       "team": "NE",
       "flag": "",
-      "blue": true
+      "gray": true
     },
     "dst": null,
     "k": null
@@ -870,7 +929,8 @@
     "qb": {
       "name": "Jayden Daniels",
       "team": "WAS",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "dst": null,
     "k": null
@@ -884,7 +944,8 @@
     "qb": {
       "name": "Joe Burrow",
       "team": "CIN",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "dst": null,
     "k": null
@@ -895,14 +956,16 @@
     "rb": {
       "name": "TreVeyon Henderson",
       "team": "NE",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "wr": null,
     "te": {
       "name": "Harold Fannin Jr.",
       "team": "CLE",
       "flag": "",
-      "yellow": true
+      "yellow": true,
+      "gray": true
     },
     "qb": null,
     "dst": null,
@@ -917,7 +980,8 @@
     "qb": {
       "name": "Jalen Hurts",
       "team": "PHI",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "dst": null,
     "k": null
@@ -929,7 +993,8 @@
       "name": "Jadarian Price",
       "team": "SEA",
       "flag": "",
-      "yellow": true
+      "yellow": true,
+      "gray": true
     },
     "wr": null,
     "te": null,
@@ -958,7 +1023,8 @@
     "rb": {
       "name": "Rhamondre Stevenson",
       "team": "NE",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "wr": null,
     "te": null,
@@ -974,7 +1040,9 @@
     "te": {
       "name": "Tucker Kraft",
       "team": "GB",
-      "flag": ""
+      "flag": "",
+      "blue": true,
+      "gray": true
     },
     "qb": null,
     "dst": null,
@@ -1002,7 +1070,8 @@
     "te": {
       "name": "Sam LaPorta",
       "team": "DET",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "qb": null,
     "dst": null,
@@ -1015,7 +1084,8 @@
     "wr": {
       "name": "Carnell Tate",
       "team": "TEN",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -1059,7 +1129,8 @@
     "qb": {
       "name": "Justin Herbert",
       "team": "LAC",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "dst": null,
     "k": null
@@ -1084,7 +1155,8 @@
     "rb": {
       "name": "Jonathon Brooks",
       "team": "CAR",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "wr": null,
     "te": null,
@@ -1201,7 +1273,8 @@
       "name": "Jordyn Brooks",
       "team": "or Jack Campbell",
       "flag": "",
-      "yellow": true
+      "yellow": true,
+      "gray": true
     },
     "k": null
   },
@@ -1245,7 +1318,13 @@
       "blue": true
     },
     "te": null,
-    "qb": null,
+    "qb": {
+      "name": "Bo Nix",
+      "team": "DEN",
+      "flag": "",
+      "yellow": true,
+      "gray": true
+    },
     "dst": null,
     "k": null
   },
@@ -1269,7 +1348,8 @@
     "rb": {
       "name": "Rico Dowdle",
       "team": "PIT",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "wr": null,
     "te": null,
@@ -1284,7 +1364,9 @@
     "wr": {
       "name": "Alec Pierce",
       "team": "IND",
-      "flag": ""
+      "flag": "",
+      "blue": true,
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -1328,7 +1410,8 @@
     "qb": {
       "name": "Brock Purdy",
       "team": "SF",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "dst": null,
     "k": null
@@ -1395,12 +1478,7 @@
     "rb": null,
     "wr": null,
     "te": null,
-    "qb": {
-      "name": "Bo Nix",
-      "team": "DEN",
-      "flag": "",
-      "yellow": true
-    },
+    "qb": null,
     "dst": null,
     "k": null
   },
@@ -1427,7 +1505,8 @@
     "qb": {
       "name": "Jaxson Dart",
       "team": "NYG",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "dst": null,
     "k": null
@@ -1509,7 +1588,9 @@
     "wr": {
       "name": "Matthew Golden",
       "team": "GB",
-      "flag": ""
+      "flag": "",
+      "yellow": true,
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -1524,7 +1605,8 @@
     "te": {
       "name": "Dalton Kincaid",
       "team": "BUF",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "qb": null,
     "dst": null,
@@ -1677,7 +1759,8 @@
     "wr": {
       "name": "Jakobi Meyers",
       "team": "JAC",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -1692,7 +1775,8 @@
     "te": {
       "name": "Dallas Goedert",
       "team": "PHI",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "qb": null,
     "dst": null,
@@ -1705,7 +1789,8 @@
     "wr": {
       "name": "Jayden Higgins",
       "team": "HOU",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -1747,7 +1832,8 @@
     "wr": {
       "name": "KC Concepcion",
       "team": "CLE",
-      "flag": ""
+      "flag": "",
+      "blue": true
     },
     "te": null,
     "qb": null,
@@ -1761,7 +1847,8 @@
     "wr": {
       "name": "Wan'Dale Robinson",
       "team": "TEN",
-      "flag": ""
+      "flag": "",
+      "yellow": true
     },
     "te": null,
     "qb": null,
@@ -1776,7 +1863,8 @@
     "te": {
       "name": "Mark Andrews",
       "team": "BAL",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "qb": null,
     "dst": null,
@@ -1887,7 +1975,9 @@
     "wr": {
       "name": "Rashid Shaheed",
       "team": "SEA",
-      "flag": ""
+      "flag": "",
+      "yellow": true,
+      "gray": true
     },
     "te": null,
     "qb": null,
@@ -1929,7 +2019,8 @@
     "wr": {
       "name": "Deebo Samuel Sr.",
       "team": "SF",
-      "flag": ""
+      "flag": "",
+      "yellow": true
     },
     "te": null,
     "qb": null,
@@ -2041,7 +2132,8 @@
     "wr": {
       "name": "Jalen McMillan",
       "team": "TB",
-      "flag": ""
+      "flag": "",
+      "blue": true
     },
     "te": null,
     "qb": null,
@@ -2212,7 +2304,9 @@
     "dst": {
       "name": "Los Angeles Rams",
       "team": "LAR",
-      "flag": ""
+      "flag": "",
+      "blue": true,
+      "yellow": true
     },
     "k": null
   },
@@ -2226,7 +2320,8 @@
     "dst": {
       "name": "Seattle Seahawks",
       "team": "SEA",
-      "flag": ""
+      "flag": "",
+      "blue": true
     },
     "k": null
   },
@@ -2242,7 +2337,13 @@
       "flag": ""
     },
     "dst": null,
-    "k": null
+    "k": {
+      "name": "Brandon Aubrey",
+      "team": "DAL",
+      "flag": "",
+      "yellow": true,
+      "gray": true
+    }
   },
   {
     "round": 14,
@@ -2294,11 +2395,7 @@
     "te": null,
     "qb": null,
     "dst": null,
-    "k": {
-      "name": "Brandon Aubrey",
-      "team": "DAL",
-      "flag": ""
-    }
+    "k": null
   },
   {
     "round": 14,
@@ -2367,7 +2464,8 @@
     "k": {
       "name": "Ka'imi Fairbairn",
       "team": "HOU",
-      "flag": ""
+      "flag": "",
+      "blue": true
     }
   },
   {
@@ -2396,7 +2494,12 @@
     "te": null,
     "qb": null,
     "dst": null,
-    "k": null
+    "k": {
+      "name": "Cameron Dicker",
+      "team": "LAC",
+      "flag": "",
+      "blue": true
+    }
   },
   {
     "round": 15,
@@ -2504,11 +2607,7 @@
     "te": null,
     "qb": null,
     "dst": null,
-    "k": {
-      "name": "Cameron Dicker",
-      "team": "LAC",
-      "flag": ""
-    }
+    "k": null
   },
   {
     "round": 15,
@@ -3077,7 +3176,8 @@
     "wr": {
       "name": "Rashod Bateman",
       "team": "BAL",
-      "flag": ""
+      "flag": "",
+      "gray": true
     },
     "te": null,
     "qb": null,
