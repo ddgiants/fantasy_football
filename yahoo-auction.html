@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 PPR Fantasy Football Cheat Sheet - Yahoo Auction</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background:#e9ecef; padding:10px; color:#1a1a1a}
+  .container{max-width:1400px;margin:0 auto;background:white;box-shadow:0 4px 20px rgba(0,0,0,0.15);overflow:hidden}
+  /* Header */
+  .header{background:#0a2540;color:white;text-align:center;padding:14px 10px 10px}
+  .header h1{font-size:26px;letter-spacing:1.2px;font-weight:800;line-height:1.1}
+  .header h1 span{font-weight:400}
+  .subheader{background:#0a2540;color:#cbd5e0;text-align:center;font-size:11px;letter-spacing:0.4px;padding:0 10px 10px;border-top:1px solid rgba(255,255,255,0.1)}
+  .subheader b{color:white}
+  .legend-bar{background:#f8f9fa;border-bottom:1px solid #dee2e6;padding:6px 12px;text-align:center;font-size:10px;color:#555;display:flex;justify-content:center;gap:18px;flex-wrap:wrap;align-items:center}
+  .legend-bar span{display:inline-flex;align-items:center;gap:5px}
+  .legend-swatch{width:12px;height:12px;border:1px solid #bbb;display:inline-block;border-radius:2px}
+  .sw-gray{background:#bdbdbd}
+  .sw-yellow{background:#ffeb3b}
+  .sw-dark{background:#424242}
+  .legend-bar button{padding:2px 8px;font-size:10px;cursor:pointer;border:1px solid #bbb;background:white;border-radius:3px}
+  .legend-bar button:hover{background:#e9ecef}
+  #save-status{font-size:10px;opacity:0.7;min-width:60px;display:inline-block;text-align:left}
+  /* Grid */
+  .board{padding:8px;background:white}
+  .grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;align-items:start}
+  @media(max-width:1100px){.grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}}
+  .col{display:flex;flex-direction:column;gap:8px}
+  table{width:100%;border-collapse:collapse;table-layout:fixed}
+  col.rank{width:28px}
+  col.player{width:auto}
+  col.tm{width:36px}
+  col.dollar{width:32px}
+  col.tier{width:24px}
+  th{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;padding:5px 3px;color:white;text-align:center;border:1px solid rgba(0,0,0,0.1)}
+  th.pos-qb{background:#2c3e50}
+  th.pos-rb{background:#2c7be5}
+  th.pos-wr{background:#00a86b}
+  th.pos-te{background:#e67e22}
+  th.pos-k{background:#6c5ce7}
+  th.pos-dst{background:#00b894}
+  /* table header row */
+  .tbl-head th{background:#1a2a3a;font-size:8.5px;letter-spacing:0.3px}
+  .tbl-head th.rank-h{background:#1a2a3a}
+  .tbl-head th.player-h{background:#1a2a3a;text-align:left;padding-left:6px}
+  .tbl-head th.tm-h{background:#1a2a3a}
+  .tbl-head th.dollar-h{background:#1a2a3a}
+  .tbl-head th.tier-h{background:#1a2a3a}
+  /* body cells */
+  td{font-size:10.5px;padding:2.6px 3px;border:1px solid #e3e6e8;vertical-align:middle;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  td.rank{font-size:10px;color:#555;text-align:center;font-weight:600;background:#f8f9fa}
+  td.player{text-align:left;font-weight:600;color:#0a2540;padding-left:5px;cursor:pointer}
+  td.player .bye{color:#6c757d;font-weight:400;font-size:9px}
+  td.tm{text-align:center;font-size:10px;font-weight:700;color:#333;cursor:pointer}
+  td.dollar{text-align:center;font-size:10px;font-weight:700;color:#0a7a00;cursor:pointer}
+  td.tier{text-align:center;font-size:10px;font-weight:700;color:#333;cursor:pointer}
+  tr{transition:background 0.12s}
+  /* tier shading fallback - very subtle like PDF? Use alternating tiers */
+  tr.tier-1 td.player, tr.tier-1 td.tm, tr.tier-1 td.dollar, tr.tier-1 td.tier{background:#fef9db}
+  tr.tier-2 td.player, tr.tier-2 td.tm, tr.tier-2 td.dollar, tr.tier-2 td.tier{background:#e8f8f0}
+  tr.tier-3 td.player, tr.tier-3 td.tm, tr.tier-3 td.dollar, tr.tier-3 td.tier{background:#ebf5ff}
+  tr.tier-4 td.player, tr.tier-4 td.tm, tr.tier-4 td.dollar, tr.tier-4 td.tier{background:#fef0e6}
+  tr.tier-5 td.player, tr.tier-5 td.tm, tr.tier-5 td.dollar, tr.tier-5 td.tier{background:#f3efff}
+  tr.tier-6 td.player, tr.tier-6 td.tm, tr.tier-6 td.dollar, tr.tier-6 td.tier{background:#ffeef0}
+  tr.tier-7 td.player, tr.tier-7 td.tm, tr.tier-7 td.dollar, tr.tier-7 td.tier{background:#f0f0f0}
+  /* highlight overrides */
+  tr.hl-gray td{background:#bdbdbd !important;color:#212529 !important}
+  tr.hl-yellow td{background:#ffeb3b !important;color:#212529 !important}
+  tr.hl-dark td{background:#424242 !important;color:#f8f9fa !important}
+  tr.hl-dark td .bye{color:#ddd !important}
+  td.hl-gray{background:#bdbdbd !important;color:#212529 !important}
+  td.hl-yellow{background:#ffeb3b !important;color:#212529 !important}
+  td.hl-dark{background:#424242 !important;color:#f8f9fa !important}
+  /* hover */
+  tr:hover td{filter:brightness(0.97)}
+  .footer{padding:8px 12px;text-align:center;font-size:9px;color:#888;background:#f8f9fa;border-top:1px solid #dee2e6}
+  .pos-title{font-size:11px;font-weight:800;color:white;text-align:center;padding:4px 0;letter-spacing:1px}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header"><h1>2026 PPR FANTASY FOOTBALL CHEAT SHEET</h1></div>
+  <div class="subheader">PPR rankings &nbsp;|&nbsp; $200 auction values &nbsp;|&nbsp; Bye weeks in parentheses &nbsp;|&nbsp; Tier shown at right &nbsp;|&nbsp; <b>Updated 8/26/2026</b></div>
+  <div class="legend-bar">
+    <span>Click cells to track draft:</span>
+    <span><span class="legend-swatch sw-gray"></span> Double-click = Gray (drafted)</span>
+    <span><span class="legend-swatch sw-yellow"></span> Shift + Click = Yellow (target)</span>
+    <span><span class="legend-swatch sw-dark"></span> Cmd / Ctrl + Click = Dark Gray (avoid)</span>
+    <span style="margin-left:8px;opacity:0.7">Click any cell &middot; highlights entire player row</span>
+    <button id="reset-btn" title="Clear all highlights">Reset</button>
+    <button id="connect-btn" title="Connect file to auto-save highlights to disk">Connect File</button>
+    <span id="save-status"></span>
+  </div>
+  <div class="board">
+    <div class="grid">
+      <!-- COL 1: QB + TE -->
+      <div class="col">
+        <table>
+          <colgroup><col class="rank"><col class="player"><col class="tm"><col class="dollar"><col class="tier"></colgroup>
+          <thead>
+            <tr><th colspan="5" class="pos-qb pos-title">QB</th></tr>
+            <tr class="tbl-head"><th class="rank-h">#</th><th class="player-h">PLAYER</th><th class="tm-h">TM</th><th class="dollar-h">$</th><th class="tier-h">T</th></tr>
+          </thead>
+          <tbody id="qb-body"></tbody>
+        </table>
+        <table>
+          <colgroup><col class="rank"><col class="player"><col class="tm"><col class="dollar"><col class="tier"></colgroup>
+          <thead>
+            <tr><th colspan="5" class="pos-te pos-title">TE</th></tr>
+            <tr class="tbl-head"><th class="rank-h">#</th><th class="player-h">PLAYER</th><th class="tm-h">TM</th><th class="dollar-h">$</th><th class="tier-h">T</th></tr>
+          </thead>
+          <tbody id="te-body"></tbody>
+        </table>
+      </div>
+      <!-- COL 2: RB -->
+      <div class="col">
+        <table>
+          <colgroup><col class="rank"><col class="player"><col class="tm"><col class="dollar"><col class="tier"></colgroup>
+          <thead>
+            <tr><th colspan="5" class="pos-rb pos-title">RB</th></tr>
+            <tr class="tbl-head"><th class="rank-h">#</th><th class="player-h">PLAYER</th><th class="tm-h">TM</th><th class="dollar-h">$</th><th class="tier-h">T</th></tr>
+          </thead>
+          <tbody id="rb-body"></tbody>
+        </table>
+      </div>
+      <!-- COL 3: WR -->
+      <div class="col">
+        <table>
+          <colgroup><col class="rank"><col class="player"><col class="tm"><col class="dollar"><col class="tier"></colgroup>
+          <thead>
+            <tr><th colspan="5" class="pos-wr pos-title">WR</th></tr>
+            <tr class="tbl-head"><th class="rank-h">#</th><th class="player-h">PLAYER</th><th class="tm-h">TM</th><th class="dollar-h">$</th><th class="tier-h">T</th></tr>
+          </thead>
+          <tbody id="wr-body"></tbody>
+        </table>
+      </div>
+      <!-- COL 4: K + DST -->
+      <div class="col">
+        <table>
+          <colgroup><col class="rank"><col class="player"><col class="tm"><col class="dollar"><col class="tier"></colgroup>
+          <thead>
+            <tr><th colspan="5" class="pos-k pos-title">K</th></tr>
+            <tr class="tbl-head"><th class="rank-h">#</th><th class="player-h">PLAYER</th><th class="tm-h">TM</th><th class="dollar-h">$</th><th class="tier-h">T</th></tr>
+          </thead>
+          <tbody id="k-body"></tbody>
+        </table>
+        <table>
+          <colgroup><col class="rank"><col class="player"><col class="tm"><col class="dollar"><col class="tier"></colgroup>
+          <thead>
+            <tr><th colspan="5" class="pos-dst pos-title">DST</th></tr>
+            <tr class="tbl-head"><th class="rank-h">#</th><th class="player-h">PLAYER</th><th class="tm-h">TM</th><th class="dollar-h">$</th><th class="tier-h">T</th></tr>
+          </thead>
+          <tbody id="dst-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="footer">Tip: Double-click a player row to mark as drafted (gray). Shift+Click to mark as target (yellow). Cmd (Mac) or Ctrl (Win) + Click to mark as avoid (dark gray). Click again with same modifier to clear. Highlights auto-save and persist on reload.</div>
+</div>
+<script>
+const qb = [
+ [1,"Josh Allen","(7)","BUF","$29","1"],
+ [2,"Lamar Jackson","(13)","BAL","$16","1"],
+ [3,"Joe Burrow","(6)","CIN","$14","1"],
+ [4,"Justin Herbert","(7)","LAC","$13","2"],
+ [5,"Jayden Daniels","(7)","WAS","$13","2"],
+ [6,"Jalen Hurts","(10)","PHI","$10","2"],
+ [7,"Dak Prescott","(14)","DAL","$9","2"],
+ [8,"Drake Maye","(11)","NE","$8","2"],
+ [9,"Matthew Stafford","(11)","LAR","$8","2"],
+ [10,"Caleb Williams","(10)","CHI","$7","2"],
+ [11,"Brock Purdy","(8)","SF","$7","3"],
+ [12,"Trevor Lawrence","(7)","JAC","$6","3"],
+ [13,"Patrick Mahomes II","(5)","KC","$6","3"],
+ [14,"Jaxson Dart","(8)","NYG","$5","3"],
+ [15,"Jared Goff","(6)","DET","$4","3"],
+ [16,"Jordan Love","(11)","GB","$2","3"],
+ [17,"Daniel Jones","(13)","IND","$2","3"],
+ [18,"Kyler Murray","(6)","MIN","$1","3"],
+ [19,"Baker Mayfield","(10)","TB","$1","3"],
+ [20,"Bo Nix","(10)","DEN","$1","3"],
+ [21,"Sam Darnold","(11)","SEA","$1","4"],
+ [22,"C.J. Stroud","(8)","HOU","$1","4"],
+ [23,"Tyler Shough","(8)","NO","$1","4"],
+ [24,"Bryce Young","(5)","CAR","$1","4"],
+ [25,"Malik Willis","(6)","MIA","$1","4"]
+];
+const te = [
+ [1,"Trey McBride","(14)","ARI","$35","1"],
+ [2,"Brock Bowers","(13)","LV","$32","1"],
+ [3,"Tucker Kraft","(11)","GB","$23","2"],
+ [4,"Colston Loveland","(10)","CHI","$20","2"],
+ [5,"Tyler Warren","(13)","IND","$17","2"],
+ [6,"Harold Fannin Jr.","(11)","CLE","$15","2"],
+ [7,"Kyle Pitts Sr.","(11)","ATL","$13","2"],
+ [8,"Sam LaPorta","(6)","DET","$13","2"],
+ [9,"Isaiah Likely","(8)","NYG","$9","3"],
+ [10,"George Kittle","(8)","SF","$9","3"],
+ [11,"Dalton Kincaid","(7)","BUF","$7","3"],
+ [12,"Travis Kelce","(5)","KC","$7","3"],
+ [13,"Jake Ferguson","(14)","DAL","$5","3"],
+ [14,"Oronde Gadsden II","(7)","LAC","$5","3"],
+ [15,"T.J. Hockenson","(6)","MIN","$5","3"],
+ [16,"Dallas Goedert","(10)","PHI","$5","3"],
+ [17,"Juwan Johnson","(8)","NO","$3","4"],
+ [18,"Mark Andrews","(13)","BAL","$3","4"],
+ [19,"Hunter Henry","(11)","NE","$3","4"],
+ [20,"Chig Okonkwo","(7)","WAS","$3","4"],
+ [21,"Terrance Ferguson","(11)","LAR","$1","4"],
+ [22,"Dalton Schultz","(8)","HOU","$1","4"],
+ [23,"Brenton Strange","(7)","JAC","$1","4"],
+ [24,"Gunnar Helm","(9)","TEN","$1","4"],
+ [25,"Greg Dulcich","(6)","MIA","$1","4"]
+];
+const rb = [
+ [1,"Bijan Robinson","(11)","ATL","$56","1"],
+ [2,"Jahmyr Gibbs","(6)","DET","$53","1"],
+ [3,"Christian McCaffrey","(8)","SF","$47","2"],
+ [4,"Jonathan Taylor","(13)","IND","$43","2"],
+ [5,"De'Von Achane","(6)","MIA","$43","2"],
+ [6,"Chase Brown","(6)","CIN","$39","2"],
+ [7,"James Cook III","(7)","BUF","$35","3"],
+ [8,"Omarion Hampton","(7)","LAC","$35","3"],
+ [9,"Saquon Barkley","(10)","PHI","$32","3"],
+ [10,"Ashton Jeanty","(13)","LV","$32","3"],
+ [11,"Josh Jacobs","(11)","GB","$29","3"],
+ [12,"Breece Hall","(13)","NYJ","$29","4"],
+ [13,"Jeremiyah Love","(14)","ARI","$26","4"],
+ [14,"Kenneth Walker III","(5)","KC","$26","4"],
+ [15,"Bhayshul Tuten","(7)","JAC","$23","4"],
+ [16,"Kyren Williams","(11)","LAR","$23","4"],
+ [17,"Derrick Henry","(13)","BAL","$20","4"],
+ [18,"Bucky Irving","(10)","TB","$20","4"],
+ [19,"TreVeyon Henderson","(11)","NE","$18","4"],
+ [20,"Javonte Williams","(14)","DAL","$18","4"],
+ [21,"Travis Etienne Jr.","(8)","NO","$16","4"],
+ [22,"Cam Skattebo","(8)","NYG","$16","5"],
+ [23,"RJ Harvey","(10)","DEN","$13","5"],
+ [24,"D'Andre Swift","(10)","CHI","$13","5"],
+ [25,"Quinshon Judkins","(11)","CLE","$13","5"],
+ [26,"Jaylen Warren","(9)","PIT","$11","5"],
+ [27,"David Montgomery","(8)","HOU","$11","5"],
+ [28,"Rico Dowdle","(9)","PIT","$11","5"],
+ [29,"Tony Pollard","(9)","TEN","$9","6"],
+ [30,"Rhamondre Stevenson","(11)","NE","$9","6"],
+ [31,"Kyle Monangai","(10)","CHI","$9","6"],
+ [32,"Aaron Jones Sr.","(6)","MIN","$9","6"],
+ [33,"Chuba Hubbard","(5)","CAR","$7","6"],
+ [34,"Kenny Gainwell","(10)","TB","$7","6"],
+ [35,"Blake Corum","(11)","LAR","$7","6"],
+ [36,"Zach Charbonnet","(11)","SEA","$7","6"],
+ [37,"Woody Marks","(8)","HOU","$5","6"],
+ [38,"J.K. Dobbins","(10)","DEN","$5","6"],
+ [39,"Jacory Croskey-Merritt","(7)","WAS","$5","6"],
+ [40,"Jadarian Price","(11)","SEA","$5","6"],
+ [41,"Jonathon Brooks","(5)","CAR","$3","7"],
+ [42,"Rachaad White","(7)","WAS","$3","7"],
+ [43,"Alvin Kamara","(8)","NO","$3","7"],
+ [44,"Dylan Sampson","(11)","CLE","$3","7"],
+ [45,"Jordan Mason","(6)","MIN","$3","7"],
+ [46,"Keaton Mitchell","(7)","LAC","$1","7"],
+ [47,"Tyrone Tracy Jr.","(8)","NYG","$1","7"],
+ [48,"Tyjae Spears","(9)","TEN","$1","7"],
+ [49,"Tyler Allgeier","(14)","ARI","$1","7"],
+ [50,"Ray Davis","(7)","BUF","$1","7"]
+];
+const wr = [
+ [1,"Ja'Marr Chase","(6)","CIN","$55","1"],
+ [2,"Puka Nacua","(11)","LAR","$53","1"],
+ [3,"Jaxon Smith-Njigba","(11)","SEA","$51","1"],
+ [4,"Amon-Ra St. Brown","(6)","DET","$47","2"],
+ [5,"CeeDee Lamb","(14)","DAL","$47","2"],
+ [6,"Justin Jefferson","(6)","MIN","$43","2"],
+ [7,"A.J. Brown","(11)","NE","$39","3"],
+ [8,"Drake London","(11)","ATL","$39","3"],
+ [9,"Nico Collins","(8)","HOU","$36","3"],
+ [10,"Chris Olave","(8)","NO","$36","3"],
+ [11,"George Pickens","(14)","DAL","$33","3"],
+ [12,"Rashee Rice","(5)","KC","$33","3"],
+ [13,"Jaylen Waddle","(10)","DEN","$30","4"],
+ [14,"Zay Flowers","(13)","BAL","$30","4"],
+ [15,"Tee Higgins","(6)","CIN","$27","4"],
+ [16,"Garrett Wilson","(13)","NYJ","$27","4"],
+ [17,"DeVonta Smith","(10)","PHI","$24","4"],
+ [18,"Tetairoa McMillan","(5)","CAR","$24","4"],
+ [19,"Ladd McConkey","(7)","LAC","$21","4"],
+ [20,"Malik Nabers","(8)","NYG","$21","4"],
+ [21,"Terry McLaurin","(7)","WAS","$19","4"],
+ [22,"Jameson Williams","(6)","DET","$19","5"],
+ [23,"Luther Burden III","(10)","CHI","$16","5"],
+ [24,"Emeka Egbuka","(10)","TB","$16","5"],
+ [25,"Mike Evans","(8)","SF","$16","5"],
+ [26,"Davante Adams","(11)","LAR","$13","5"],
+ [27,"Christian Watson","(11)","GB","$13","5"],
+ [28,"Rome Odunze","(10)","CHI","$13","5"],
+ [29,"Courtland Sutton","(10)","DEN","$10","5"],
+ [30,"Brian Thomas Jr.","(7)","JAC","$10","5"],
+ [31,"Marvin Harrison Jr.","(14)","ARI","$10","5"],
+ [32,"DK Metcalf","(9)","PIT","$10","6"],
+ [33,"DJ Moore","(7)","BUF","$8","6"],
+ [34,"Chris Godwin Jr.","(10)","TB","$8","6"],
+ [35,"Michael Wilson","(14)","ARI","$8","6"],
+ [36,"Quentin Johnston","(7)","LAC","$8","6"],
+ [37,"Michael Pittman Jr.","(9)","PIT","$6","6"],
+ [38,"Alec Pierce","(13)","IND","$6","6"],
+ [39,"Wan'Dale Robinson","(9)","TEN","$6","6"],
+ [40,"Jakobi Meyers","(7)","JAC","$6","6"],
+ [41,"Carnell Tate","(9)","TEN","$3","6"],
+ [42,"Jordan Addison","(6)","MIN","$3","6"],
+ [43,"Josh Downs","(13)","IND","$3","6"],
+ [44,"Parker Washington","(7)","JAC","$3","7"],
+ [45,"Khalil Shakir","(7)","BUF","$3","7"],
+ [46,"Jayden Reed","(11)","GB","$1","7"],
+ [47,"Xavier Worthy","(5)","KC","$1","7"],
+ [48,"Jordyn Tyson","(8)","NO","$1","7"],
+ [49,"Makai Lemon","(10)","PHI","$1","7"],
+ [50,"Stefon Diggs","(7)","WAS","$1","7"]
+];
+const k = [
+ [1,"Brandon Aubrey","(14)","DAL","$2","1"],
+ [2,"Ka'imi Fairbairn","(8)","HOU","$2","1"],
+ [3,"Cam Little","(7)","JAC","$2","1"],
+ [4,"Cameron Dicker","(7)","LAC","$1","1"],
+ [5,"Jason Myers","(11)","SEA","$1","1"],
+ [6,"Eddy Pineiro","(8)","SF","$1","2"],
+ [7,"Will Reichard","(6)","MIN","$1","2"],
+ [8,"Andy Borregales","(11)","NE","$1","2"],
+ [9,"Tyler Loop","(13)","BAL","$1","2"],
+ [10,"Chase McLaughlin","(10)","TB","$1","2"],
+ [11,"Cairo Santos","(10)","CHI","$1","3"],
+ [12,"Jake Bates","(6)","DET","$1","3"],
+ [13,"Harrison Mevis","(11)","LAR","$1","3"],
+ [14,"Evan McPherson","(6)","CIN","$1","3"],
+ [15,"Chris Boswell","(9)","PIT","$1","3"]
+];
+const dst = [
+ [1,"Houston Texans","(8)","HOU","$2","1"],
+ [2,"Seattle Seahawks","(11)","SEA","$2","1"],
+ [3,"Los Angeles Rams","(11)","LAR","$2","1"],
+ [4,"Denver Broncos","(10)","DEN","$1","1"],
+ [5,"Philadelphia Eagles","(10)","PHI","$1","1"],
+ [6,"Jacksonville Jaguars","(7)","JAC","$1","2"],
+ [7,"New England Patriots","(11)","NE","$1","2"],
+ [8,"Baltimore Ravens","(13)","BAL","$1","2"],
+ [9,"Minnesota Vikings","(6)","MIN","$1","2"],
+ [10,"Cleveland Browns","(11)","CLE","$1","2"],
+ [11,"Pittsburgh Steelers","(9)","PIT","$1","3"],
+ [12,"Kansas City Chiefs","(5)","KC","$1","3"],
+ [13,"Green Bay Packers","(11)","GB","$1","3"],
+ [14,"Los Angeles Chargers","(7)","LAC","$1","3"],
+ [15,"New Orleans Saints","(8)","NO","$1","3"]
+];
+
+// --- Persistence config ---
+const STORAGE_KEY = 'yahoo-auction-2026-state';
+const DB_NAME = 'yahoo-auction-db';
+const STORE_NAME = 'handles';
+let fileHandle = null;
+let pendingFileHandle = null;
+let autoSaveTimer = null;
+
+function updateStatus(msg){
+  const el = document.getElementById('save-status');
+  if(el) el.textContent = msg;
+}
+
+function getState(){
+  const state = {};
+  document.querySelectorAll('tbody tr[data-id]').forEach(tr=>{
+    const id = tr.dataset.id;
+    const cls = [...tr.classList].find(c=>c==='hl-gray'||c==='hl-yellow'||c==='hl-dark');
+    if(cls) state[id]=cls;
+  });
+  return state;
+}
+
+function saveState(){
+  try{
+    const state = getState();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }catch(e){}
+}
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return;
+    const state = JSON.parse(raw);
+    document.querySelectorAll('tbody tr[data-id]').forEach(tr=>{
+      const id = tr.dataset.id;
+      const cls = state[id];
+      if(cls==='hl-gray'||cls==='hl-yellow'||cls==='hl-dark'){
+        tr.classList.add(cls);
+      }
+    });
+  }catch(e){}
+}
+
+function clearState(){
+  try{ localStorage.removeItem(STORAGE_KEY);}catch(e){}
+  document.querySelectorAll('tbody tr.hl-gray, tbody tr.hl-yellow, tbody tr.hl-dark').forEach(tr=>{
+    tr.classList.remove('hl-gray','hl-yellow','hl-dark');
+  });
+  updateStatus('Cleared');
+  setTimeout(()=>updateStatus(''),1500);
+  autoSaveToFile();
+}
+
+function scheduleAutoSave(){
+  saveState();
+  clearTimeout(autoSaveTimer);
+  updateStatus('Saving…');
+  autoSaveTimer = setTimeout(()=>{ autoSaveToFile(); }, 250);
+}
+
+async function autoSaveToFile(){
+  saveState();
+  if(!fileHandle) { updateStatus('Saved locally'); setTimeout(()=>updateStatus(''),1200); return; }
+  try{
+    const perm = await fileHandle.requestPermission({mode:'readwrite'});
+    if(perm!=='granted'){ updateStatus('Saved locally (no file permission)'); setTimeout(()=>updateStatus(''),1500); return; }
+    const state = getState();
+    const writable = await fileHandle.createWritable();
+    await writable.write(JSON.stringify(state, null, 2));
+    await writable.close();
+    updateStatus('Saved to file');
+    setTimeout(()=>updateStatus(''),1500);
+  }catch(e){
+    updateStatus('Save failed');
+    setTimeout(()=>updateStatus(''),1500);
+  }
+}
+
+async function storeFileHandle(handle){
+  try{
+    const db = await new Promise((resolve,reject)=>{
+      const req = indexedDB.open(DB_NAME,1);
+      req.onupgradeneeded = e=> e.target.result.createObjectStore(STORE_NAME);
+      req.onsuccess = e=> resolve(e.target.result);
+      req.onerror = e=> reject(e.target.error);
+    });
+    const tx = db.transaction(STORE_NAME,'readwrite');
+    tx.objectStore(STORE_NAME).put(handle,'fileHandle');
+  }catch(e){}
+}
+
+async function restoreFileHandle(){
+  try{
+    const db = await new Promise((resolve,reject)=>{
+      const req = indexedDB.open(DB_NAME,1);
+      req.onupgradeneeded = e=> e.target.result.createObjectStore(STORE_NAME);
+      req.onsuccess = e=> resolve(e.target.result);
+      req.onerror = e=> reject(e.target.error);
+    });
+    const handle = await new Promise((resolve,reject)=>{
+      const tx = db.transaction(STORE_NAME,'readonly');
+      const req = tx.objectStore(STORE_NAME).get('fileHandle');
+      req.onsuccess = ()=> resolve(req.result);
+      req.onerror = e=> reject(e.target.error);
+    });
+    if(handle){
+      try{
+        const perm = await handle.queryPermission({mode:'readwrite'});
+        if(perm==='granted'){
+          fileHandle = handle;
+          document.getElementById('connect-btn').textContent='File Connected';
+          return;
+        }
+      }catch(e){}
+      // need re-grant
+      pendingFileHandle = handle;
+      document.getElementById('connect-btn').textContent='Reconnect File';
+      document.getElementById('connect-btn').title='Click to restore file connection';
+    }
+  }catch(e){}
+}
+
+async function connectFile(){
+  try{
+    let handle = pendingFileHandle;
+    pendingFileHandle=null;
+    if(!handle){
+      handle = await window.showSaveFilePicker({
+        suggestedName: 'yahoo-auction-state.json',
+        types: [{description:'JSON', accept:{'application/json':['.json']}}]
+      });
+      await storeFileHandle(handle);
+    }
+    const perm = await handle.requestPermission({mode:'readwrite'});
+    if(perm==='granted'){
+      fileHandle = handle;
+      await storeFileHandle(handle);
+      document.getElementById('connect-btn').textContent='File Connected';
+      document.getElementById('connect-btn').title='';
+      await autoSaveToFile();
+    } else {
+      alert('Permission denied. Highlight states will still save locally and persist on reload.');
+    }
+  }catch(e){
+    if(e.name!=='AbortError') alert('Could not connect file: '+e.message);
+  }
+}
+
+async function tryLoadStateFromFile(){
+  try{
+    const resp = await fetch('yahoo-auction-state.json');
+    if(resp.ok){
+      const state = await resp.json();
+      // only apply if localStorage empty (first load)
+      const localRaw = localStorage.getItem(STORAGE_KEY);
+      if(!localRaw || localRaw==='{}'){
+        document.querySelectorAll('tbody tr[data-id]').forEach(tr=>{
+          const id=tr.dataset.id;
+          const cls=state[id];
+          if(cls==='hl-gray'||cls==='hl-yellow'||cls==='hl-dark') tr.classList.add(cls);
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      }
+    }
+  }catch(e){}
+}
+
+function renderRows(data, tbodyId, prefix){
+  const tbody = document.getElementById(tbodyId);
+  let html = "";
+  data.forEach(r=>{
+    const rank=r[0], name=r[1], bye=r[2], tm=r[3], dollar=r[4], tier=r[5];
+    const id = `${prefix}-${rank}`;
+    html += `<tr class="tier-${tier}" data-id="${id}" data-pos="${prefix}" data-rank="${rank}">
+      <td class="rank">${rank}</td>
+      <td class="player">${name} <span class="bye">${bye}</span></td>
+      <td class="tm">${tm}</td>
+      <td class="dollar">${dollar}</td>
+      <td class="tier">${tier}</td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
+}
+renderRows(qb,"qb-body","qb");
+renderRows(te,"te-body","te");
+renderRows(rb,"rb-body","rb");
+renderRows(wr,"wr-body","wr");
+renderRows(k,"k-body","k");
+renderRows(dst,"dst-body","dst");
+
+// Bind interactions after render, then load persisted highlights
+// Make each cell clickable: behavior
+// Double-click -> gray, Shift+Click -> yellow, Cmd/Ctrl+Click -> dark gray
+
+function toggleRow(tr, cls){
+  const has = tr.classList.contains(cls);
+  tr.classList.remove("hl-gray","hl-yellow","hl-dark");
+  tr.querySelectorAll("td").forEach(td=>td.classList.remove("hl-gray","hl-yellow","hl-dark"));
+  if(!has){
+    tr.classList.add(cls);
+  }
+  scheduleAutoSave();
+}
+
+function bindEvents(){
+  document.querySelectorAll("tbody tr").forEach(tr=>{
+    tr.querySelectorAll("td").forEach(td=>{
+      td.addEventListener("click", (e)=>{
+        if(e.shiftKey){
+          e.preventDefault();
+          e.stopPropagation();
+          toggleRow(tr, "hl-yellow");
+        } else if(e.metaKey || e.ctrlKey){
+          e.preventDefault();
+          e.stopPropagation();
+          toggleRow(tr, "hl-dark");
+        }
+      });
+      td.addEventListener("dblclick", (e)=>{
+        e.preventDefault();
+        e.stopPropagation();
+        toggleRow(tr, "hl-gray");
+      });
+    });
+    tr.addEventListener("dblclick", (e)=>{
+      if(e.target.tagName==="TR"){
+        toggleRow(tr, "hl-gray");
+      }
+    });
+  });
+}
+bindEvents();
+loadState();
+// Try to load from file if local empty, then re-apply file state
+// (non-blocking)
+tryLoadStateFromFile().then(()=>{ /* if loaded, ensure handlers reflect */ });
+
+// Button handlers
+document.getElementById('reset-btn').addEventListener('click', clearState);
+document.getElementById('connect-btn').addEventListener('click', connectFile);
+
+// Restore file handle if previously connected
+restoreFileHandle();
+
+// Prevent text selection on double click feeling lag
+document.addEventListener("mousedown", e=>{
+  if(e.detail>1) e.preventDefault();
+});
+</script>
+</body>
+</html>
