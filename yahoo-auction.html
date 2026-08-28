@@ -80,9 +80,12 @@
   .pos-title{font-size:11px;font-weight:800;color:white;text-align:center;padding:4px 0;letter-spacing:1px}
   #dst-notes{width:100%;min-height:220px;resize:vertical;border:1px solid #ccc;border-radius:3px;padding:6px;font-size:11px;font-family:inherit;color:#333;background:#fffbe9}
   #dst-notes:focus{outline:2px solid #00b894;outline-offset:-1px}
+  #total-box{position:fixed;top:10px;right:12px;z-index:1000;background:#0a2540;color:#fff;border:2px solid #ffeb3b;border-radius:6px;padding:6px 12px;font-size:13px;font-weight:700;box-shadow:0 3px 10px rgba(0,0,0,0.3);pointer-events:none;white-space:nowrap}
+  #total-box .total-label{color:#ffeb3b;font-weight:800}
 </style>
 </head>
 <body>
+<div id="total-box"><span class="total-label">Yellow Total:</span> <span id="total-amount">$0</span></div>
 <div class="container">
   <div class="header"><h1>2026 PPR FANTASY FOOTBALL CHEAT SHEET</h1></div>
   <div class="subheader">PPR rankings &nbsp;|&nbsp; $200 auction values &nbsp;|&nbsp; Bye weeks in parentheses &nbsp;|&nbsp; Tier shown at right &nbsp;|&nbsp; <b>Updated 8/26/2026</b></div>
@@ -395,6 +398,20 @@ function applyState(state){
   if(typeof state['dst-notes'] === 'string' && notesEl){
     notesEl.value = state['dst-notes'];
   }
+  updateTotalBox();
+}
+
+function updateTotalBox(){
+  let total = 0;
+  document.querySelectorAll('tbody tr.hl-yellow').forEach(tr=>{
+    const el = tr.querySelector('td.dollar');
+    if(el){
+      const v = parseInt((el.textContent||'').replace(/[^0-9]/g,''), 10);
+      if(!isNaN(v)) total += v;
+    }
+  });
+  const amountEl = document.getElementById('total-amount');
+  if(amountEl) amountEl.textContent = '$' + total;
 }
 
 function clearState(){
@@ -406,6 +423,7 @@ function clearState(){
   updateStatus('Cleared');
   setTimeout(()=>updateStatus(''),1500);
   autoSaveToFile();
+  updateTotalBox();
 }
 
 function scheduleAutoSave(){
@@ -577,6 +595,7 @@ function toggleRow(tr, cls){
   if(!has){
     tr.classList.add(cls);
   }
+  updateTotalBox();
   scheduleAutoSave();
 }
 
