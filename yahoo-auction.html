@@ -475,18 +475,20 @@ async function restoreFileHandle(){
       req.onerror = e=> reject(e.target.error);
     });
     if(handle){
-      try{
-        const perm = await handle.queryPermission({mode:'readwrite'});
-        if(perm==='granted'){
-          fileHandle = handle;
-          document.getElementById('connect-btn').textContent='File Connected';
-          document.getElementById('connect-btn').title='';
-          return handle;
-        }
-      }catch(e){}
+      let perm = 'prompt';
+      try{ perm = await handle.queryPermission({mode:'readwrite'}); }catch(e){}
+      if(perm!=='granted'){
+        try{ perm = await handle.requestPermission({mode:'readwrite'}); }catch(e){}
+      }
+      if(perm==='granted'){
+        fileHandle = handle;
+        document.getElementById('connect-btn').textContent='File Connected';
+        document.getElementById('connect-btn').title='';
+        return handle;
+      }
       pendingFileHandle = handle;
       document.getElementById('connect-btn').textContent='Reconnect File';
-      document.getElementById('connect-btn').title='Click to restore file permission';
+      document.getElementById('connect-btn').title='Click a cell or this button to re-link the state file';
     }
   }catch(e){}
   return null;
@@ -497,10 +499,7 @@ async function connectFile(){
     let handle = pendingFileHandle;
     pendingFileHandle = null;
     if(!handle){
-      handle = await window.showSaveFilePicker({
-        suggestedName: 'yahoo-auction-state.json',
-        types: [{description:'JSON', accept:{'application/json':['.json']}}]
-      });
+      handle = await pickStateFile();
       await storeFileHandle(handle);
     }
     const perm = await handle.requestPermission({mode:'readwrite'});
@@ -517,6 +516,22 @@ async function connectFile(){
   }catch(e){
     if(e.name!=='AbortError') alert('Could not connect file: '+e.message);
   }
+}
+
+async function pickStateFile(){
+  // Prefer an open picker so you attach to the existing yahoo-auction-state.json
+  // in the repo. Fall back to a save picker for browsers without the open API.
+  if(window.showOpenFilePicker){
+    const [handle] = await window.showOpenFilePicker({
+      multiple: false,
+      types: [{description:'JSON state file', accept:{'application/json':['.json']}}]
+    });
+    return handle;
+  }
+  return await window.showSaveFilePicker({
+    suggestedName: 'yahoo-auction-state.json',
+    types: [{description:'JSON', accept:{'application/json':['.json']}}]
+  });
 }
 
 async function tryLoadStateFromJson(){
@@ -620,14 +635,33 @@ document.getElementById('dst-notes').addEventListener('input', scheduleAutoSave)
 document.getElementById('reset-btn').addEventListener('click', clearState);
 document.getElementById('connect-btn').addEventListener('click', connectFile);
 
-// Load saved state from the connected JSON file (works on file://), or from
-// yahoo-auction-state.json when served over http(s). Data only lives in the file.
+// Auto-connect on load: restore the previously linked JSON file and read it.
+// If the browser lapsed its permission, the next click anywhere re-links it
+// (no need to hunt for the button). On http(s) hosting, also auto-load the
+// sibling yahoo-auction-state.json via fetch.
 restoreFileHandle().then(handle=>{
   if(handle){
     readStateFromHandle(handle);
   } else if(window.location.protocol==='http:' || window.location.protocol==='https:'){
     tryLoadStateFromJson();
   }
+});
+
+let pendingAutoLink = true;
+document.addEventListener('click', function once(e){
+  if(!pendingAutoLink) return;
+  pendingAutoLink = false;
+  if(!pendingFileHandle) return;
+  const ph = pendingFileHandle;
+  ph.requestPermission({mode:'readwrite'}).then(perm=>{
+    if(perm!=='granted'){ pendingAutoLink = true; return; }
+    pendingFileHandle = null;
+    fileHandle = ph;
+    storeFileHandle(ph);
+    document.getElementById('connect-btn').textContent='File Connected';
+    document.getElementById('connect-btn').title='';
+    autoSaveToFile();
+  }).catch(()=>{ pendingAutoLink = true; });
 });
 
 // Prevent text selection on double click feeling lag
