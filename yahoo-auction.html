@@ -19,7 +19,7 @@
   .legend-swatch{width:12px;height:12px;border:1px solid #bbb;display:inline-block;border-radius:2px}
   .sw-gray{background:#bdbdbd}
   .sw-yellow{background:#ffeb3b}
-  .sw-dark{background:#424242}
+  .sw-dark{background:#D0312D}
   .legend-bar button{padding:2px 8px;font-size:10px;cursor:pointer;border:1px solid #bbb;background:white;border-radius:3px}
   .legend-bar button:hover{background:#e9ecef}
   #save-status{font-size:10px;opacity:0.7;min-width:60px;display:inline-block;text-align:left}
@@ -50,7 +50,7 @@
   .tbl-head th.dollar-h{background:#1a2a3a}
   .tbl-head th.tier-h{background:#1a2a3a}
   /* body cells */
-  td{font-size:10.5px;padding:2.6px 3px;border:1px solid #e3e6e8;vertical-align:middle;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  td{font-size:12px;padding:2.6px 3px;border:1px solid #e3e6e8;vertical-align:middle;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   td.rank{font-size:10px;color:#555;text-align:center;font-weight:600;background:#f8f9fa}
   td.player{text-align:left;font-weight:600;color:#0a2540;padding-left:5px;cursor:pointer}
   td.player .bye{color:#6c757d;font-weight:400;font-size:9px}
@@ -69,15 +69,17 @@
   /* highlight overrides */
   tr.hl-gray td{background:#bdbdbd !important;color:#212529 !important}
   tr.hl-yellow td{background:#ffeb3b !important;color:#212529 !important}
-  tr.hl-dark td{background:#424242 !important;color:#f8f9fa !important}
+  tr.hl-dark td{background:#D0312D !important;color:#f8f9fa !important}
   tr.hl-dark td .bye{color:#ddd !important}
   td.hl-gray{background:#bdbdbd !important;color:#212529 !important}
   td.hl-yellow{background:#ffeb3b !important;color:#212529 !important}
-  td.hl-dark{background:#424242 !important;color:#f8f9fa !important}
+  td.hl-dark{background:#D0312D !important;color:#f8f9fa !important}
   /* hover */
   tr:hover td{filter:brightness(0.97)}
   .footer{padding:8px 12px;text-align:center;font-size:9px;color:#888;background:#f8f9fa;border-top:1px solid #dee2e6}
   .pos-title{font-size:11px;font-weight:800;color:white;text-align:center;padding:4px 0;letter-spacing:1px}
+  #dst-notes{width:100%;min-height:220px;resize:vertical;border:1px solid #ccc;border-radius:3px;padding:6px;font-size:11px;font-family:inherit;color:#333;background:#fffbe9}
+  #dst-notes:focus{outline:2px solid #00b894;outline-offset:-1px}
 </style>
 </head>
 <body>
@@ -87,8 +89,9 @@
   <div class="legend-bar">
     <span>Click cells to track draft:</span>
     <span><span class="legend-swatch sw-gray"></span> Double-click = Gray (drafted)</span>
-    <span><span class="legend-swatch sw-yellow"></span> Shift + Click = Yellow (target)</span>
-    <span><span class="legend-swatch sw-dark"></span> Cmd / Ctrl + Click = Dark Gray (avoid)</span>
+    <span><span class="legend-swatch sw-yellow"></span> Cmd + Click = Yellow (target)</span>
+    <span><span class="legend-swatch sw-dark"></span> Option + Click = Dark Gray (avoid)</span>
+    <span>Ctrl + Click = Google search player</span>
     <span style="margin-left:8px;opacity:0.7">Click any cell &middot; highlights entire player row</span>
     <button id="reset-btn" title="Clear all highlights">Reset</button>
     <button id="connect-btn" title="Connect file to auto-save highlights to disk">Connect File</button>
@@ -155,10 +158,11 @@
           </thead>
           <tbody id="dst-body"></tbody>
         </table>
+        <textarea id="dst-notes" placeholder="Notes&#8230;" aria-label="Defense notes"></textarea>
       </div>
     </div>
   </div>
-  <div class="footer">Tip: Double-click a player row to mark as drafted (gray). Shift+Click to mark as target (yellow). Cmd (Mac) or Ctrl (Win) + Click to mark as avoid (dark gray). Click again with same modifier to clear. Highlights auto-save and persist on reload.</div>
+  <div class="footer">Tip: Double-click a player row to mark as drafted (gray). Cmd+Click to mark as target (yellow). Option (Alt, Mac) + Click to mark as avoid (dark gray). Ctrl+Click searches the player on Google in a new tab. Click again with same modifier to clear. Closely track draft: click "Connect File" and pick yahoo-auction-state.json (commit it to git) &middot; every change auto-saves to that file &middot; loads it on the next open, on any device.</div>
 </div>
 <script>
 const qb = [
@@ -354,8 +358,7 @@ const dst = [
  [15,"New Orleans Saints","(8)","NO","$1","3"]
 ];
 
-// --- Persistence config ---
-const STORAGE_KEY = 'yahoo-auction-2026-state';
+// --- Persistence config (file-based; no browser storage of data) ---
 const DB_NAME = 'yahoo-auction-db';
 const STORE_NAME = 'handles';
 let fileHandle = null;
@@ -374,54 +377,56 @@ function getState(){
     const cls = [...tr.classList].find(c=>c==='hl-gray'||c==='hl-yellow'||c==='hl-dark');
     if(cls) state[id]=cls;
   });
+  const notes = document.getElementById('dst-notes');
+  if(notes && notes.value) state['dst-notes'] = notes.value;
   return state;
 }
 
-function saveState(){
-  try{
-    const state = getState();
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  }catch(e){}
-}
-
-function loadState(){
-  try{
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if(!raw) return;
-    const state = JSON.parse(raw);
-    document.querySelectorAll('tbody tr[data-id]').forEach(tr=>{
-      const id = tr.dataset.id;
-      const cls = state[id];
-      if(cls==='hl-gray'||cls==='hl-yellow'||cls==='hl-dark'){
-        tr.classList.add(cls);
-      }
-    });
-  }catch(e){}
+function applyState(state){
+  if(!state || typeof state !== 'object') return;
+  document.querySelectorAll('tbody tr[data-id]').forEach(tr=>{
+    const id = tr.dataset.id;
+    const cls = state[id];
+    if(cls==='hl-gray'||cls==='hl-yellow'||cls==='hl-dark'){
+      tr.classList.add(cls);
+    }
+  });
+  const notesEl = document.getElementById('dst-notes');
+  if(typeof state['dst-notes'] === 'string' && notesEl){
+    notesEl.value = state['dst-notes'];
+  }
 }
 
 function clearState(){
-  try{ localStorage.removeItem(STORAGE_KEY);}catch(e){}
   document.querySelectorAll('tbody tr.hl-gray, tbody tr.hl-yellow, tbody tr.hl-dark').forEach(tr=>{
     tr.classList.remove('hl-gray','hl-yellow','hl-dark');
   });
+  const notesEl = document.getElementById('dst-notes');
+  if(notesEl) notesEl.value = '';
   updateStatus('Cleared');
   setTimeout(()=>updateStatus(''),1500);
   autoSaveToFile();
 }
 
 function scheduleAutoSave(){
-  saveState();
   clearTimeout(autoSaveTimer);
-  updateStatus('Saving…');
+  updateStatus('Saving\u2026');
   autoSaveTimer = setTimeout(()=>{ autoSaveToFile(); }, 250);
 }
 
 async function autoSaveToFile(){
-  saveState();
-  if(!fileHandle) { updateStatus('Saved locally'); setTimeout(()=>updateStatus(''),1200); return; }
+  if(!fileHandle){
+    updateStatus('Click "Connect File" to save');
+    setTimeout(()=>updateStatus(''),1500);
+    return;
+  }
   try{
     const perm = await fileHandle.requestPermission({mode:'readwrite'});
-    if(perm!=='granted'){ updateStatus('Saved locally (no file permission)'); setTimeout(()=>updateStatus(''),1500); return; }
+    if(perm!=='granted'){
+      updateStatus('File permission needed');
+      setTimeout(()=>updateStatus(''),1500);
+      return;
+    }
     const state = getState();
     const writable = await fileHandle.createWritable();
     await writable.write(JSON.stringify(state, null, 2));
@@ -432,6 +437,14 @@ async function autoSaveToFile(){
     updateStatus('Save failed');
     setTimeout(()=>updateStatus(''),1500);
   }
+}
+
+async function readStateFromHandle(handle){
+  try{
+    const file = await handle.getFile();
+    const state = JSON.parse(await file.text());
+    applyState(state);
+  }catch(e){}
 }
 
 async function storeFileHandle(handle){
@@ -467,21 +480,22 @@ async function restoreFileHandle(){
         if(perm==='granted'){
           fileHandle = handle;
           document.getElementById('connect-btn').textContent='File Connected';
-          return;
+          document.getElementById('connect-btn').title='';
+          return handle;
         }
       }catch(e){}
-      // need re-grant
       pendingFileHandle = handle;
       document.getElementById('connect-btn').textContent='Reconnect File';
-      document.getElementById('connect-btn').title='Click to restore file connection';
+      document.getElementById('connect-btn').title='Click to restore file permission';
     }
   }catch(e){}
+  return null;
 }
 
 async function connectFile(){
   try{
     let handle = pendingFileHandle;
-    pendingFileHandle=null;
+    pendingFileHandle = null;
     if(!handle){
       handle = await window.showSaveFilePicker({
         suggestedName: 'yahoo-auction-state.json',
@@ -495,30 +509,21 @@ async function connectFile(){
       await storeFileHandle(handle);
       document.getElementById('connect-btn').textContent='File Connected';
       document.getElementById('connect-btn').title='';
+      await readStateFromHandle(handle);
       await autoSaveToFile();
     } else {
-      alert('Permission denied. Highlight states will still save locally and persist on reload.');
+      alert('Permission denied. Click "Connect File" to re-authorize saving changes to the JSON file.');
     }
   }catch(e){
     if(e.name!=='AbortError') alert('Could not connect file: '+e.message);
   }
 }
 
-async function tryLoadStateFromFile(){
+async function tryLoadStateFromJson(){
   try{
-    const resp = await fetch('yahoo-auction-state.json');
+    const resp = await fetch('yahoo-auction-state.json', {cache:'no-store'});
     if(resp.ok){
-      const state = await resp.json();
-      // only apply if localStorage empty (first load)
-      const localRaw = localStorage.getItem(STORAGE_KEY);
-      if(!localRaw || localRaw==='{}'){
-        document.querySelectorAll('tbody tr[data-id]').forEach(tr=>{
-          const id=tr.dataset.id;
-          const cls=state[id];
-          if(cls==='hl-gray'||cls==='hl-yellow'||cls==='hl-dark') tr.classList.add(cls);
-        });
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      }
+      applyState(await resp.json());
     }
   }catch(e){}
 }
@@ -529,7 +534,7 @@ function renderRows(data, tbodyId, prefix){
   data.forEach(r=>{
     const rank=r[0], name=r[1], bye=r[2], tm=r[3], dollar=r[4], tier=r[5];
     const id = `${prefix}-${rank}`;
-    html += `<tr class="tier-${tier}" data-id="${id}" data-pos="${prefix}" data-rank="${rank}">
+    html += `<tr class="tier-${tier}" data-id="${id}" data-pos="${prefix}" data-rank="${rank}" data-name="${name.replace(/"/g,'&quot;')}">
       <td class="rank">${rank}</td>
       <td class="player">${name} <span class="bye">${bye}</span></td>
       <td class="tm">${tm}</td>
@@ -560,18 +565,38 @@ function toggleRow(tr, cls){
   scheduleAutoSave();
 }
 
+function googlePlayer(name){
+  if(!name) return;
+  const url = 'https://www.google.com/search?q=' + encodeURIComponent(name);
+  window.open(url, '_blank', 'noopener');
+}
+
 function bindEvents(){
   document.querySelectorAll("tbody tr").forEach(tr=>{
     tr.querySelectorAll("td").forEach(td=>{
+      td.addEventListener("mousedown", (e)=>{
+        if(e.altKey || e.metaKey) return;
+        if(e.button===2 || e.ctrlKey){
+          e.preventDefault();
+          e.stopPropagation();
+          googlePlayer(tr.dataset.name);
+        }
+      });
       td.addEventListener("click", (e)=>{
-        if(e.shiftKey){
+        if(e.metaKey){
           e.preventDefault();
           e.stopPropagation();
           toggleRow(tr, "hl-yellow");
-        } else if(e.metaKey || e.ctrlKey){
+        } else if(e.altKey){
           e.preventDefault();
           e.stopPropagation();
           toggleRow(tr, "hl-dark");
+        }
+      });
+      td.addEventListener("contextmenu", (e)=>{
+        if(e.button===2 || e.ctrlKey){
+          e.preventDefault();
+          e.stopPropagation();
         }
       });
       td.addEventListener("dblclick", (e)=>{
@@ -588,17 +613,22 @@ function bindEvents(){
   });
 }
 bindEvents();
-loadState();
-// Try to load from file if local empty, then re-apply file state
-// (non-blocking)
-tryLoadStateFromFile().then(()=>{ /* if loaded, ensure handlers reflect */ });
+// Auto-save notes as you type
+document.getElementById('dst-notes').addEventListener('input', scheduleAutoSave);
 
 // Button handlers
 document.getElementById('reset-btn').addEventListener('click', clearState);
 document.getElementById('connect-btn').addEventListener('click', connectFile);
 
-// Restore file handle if previously connected
-restoreFileHandle();
+// Load saved state from the connected JSON file (works on file://), or from
+// yahoo-auction-state.json when served over http(s). Data only lives in the file.
+restoreFileHandle().then(handle=>{
+  if(handle){
+    readStateFromHandle(handle);
+  } else if(window.location.protocol==='http:' || window.location.protocol==='https:'){
+    tryLoadStateFromJson();
+  }
+});
 
 // Prevent text selection on double click feeling lag
 document.addEventListener("mousedown", e=>{
