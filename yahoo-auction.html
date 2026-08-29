@@ -18,6 +18,7 @@
   .legend-bar span{display:inline-flex;align-items:center;gap:5px}
   .legend-swatch{width:12px;height:12px;border:1px solid #bbb;display:inline-block;border-radius:2px}
   .sw-gray{background:#bdbdbd}
+  .sw-blue{background:#2196F3}
   .sw-yellow{background:#ffeb3b}
   .sw-dark{background:#D0312D}
   .legend-bar button{padding:2px 8px;font-size:10px;cursor:pointer;border:1px solid #bbb;background:white;border-radius:3px}
@@ -68,10 +69,13 @@
   tr.tier-7 td.player, tr.tier-7 td.tm, tr.tier-7 td.dollar, tr.tier-7 td.tier{background:#f0f0f0}
   /* highlight overrides */
   tr.hl-gray td{background:#bdbdbd !important;color:#212529 !important}
+  tr.hl-blue td{background:#2196F3 !important;color:#ffffff !important}
+  tr.hl-blue td .bye{color:#e3f2fd !important}
   tr.hl-yellow td{background:#ffeb3b !important;color:#212529 !important}
   tr.hl-dark td{background:#D0312D !important;color:#f8f9fa !important}
   tr.hl-dark td .bye{color:#ddd !important}
   td.hl-gray{background:#bdbdbd !important;color:#212529 !important}
+  td.hl-blue{background:#2196F3 !important;color:#ffffff !important}
   td.hl-yellow{background:#ffeb3b !important;color:#212529 !important}
   td.hl-dark{background:#D0312D !important;color:#f8f9fa !important}
   /* hover */
@@ -82,16 +86,19 @@
   #dst-notes:focus{outline:2px solid #00b894;outline-offset:-1px}
   #total-box{position:fixed;top:10px;right:12px;z-index:1000;background:#0a2540;color:#fff;border:2px solid #ffeb3b;border-radius:6px;padding:6px 12px;font-size:13px;font-weight:700;box-shadow:0 3px 10px rgba(0,0,0,0.3);pointer-events:none;white-space:nowrap}
   #total-box .total-label{color:#ffeb3b;font-weight:800}
+  #total-box-blue{position:fixed;top:56px;right:12px;z-index:1000;background:#0a2540;color:#fff;border:2px solid #2196F3;border-radius:6px;padding:6px 12px;font-size:13px;font-weight:700;box-shadow:0 3px 10px rgba(0,0,0,0.3);pointer-events:none;white-space:nowrap}
+  #total-box-blue .total-label{color:#2196F3;font-weight:800}
 </style>
 </head>
 <body>
 <div id="total-box"><span class="total-label">Yellow Total:</span> <span id="total-amount">$0</span></div>
+<div id="total-box-blue"><span class="total-label">Blue Total:</span> <span id="total-amount-blue">$0</span></div>
 <div class="container">
   <div class="header"><h1>2026 PPR FANTASY FOOTBALL CHEAT SHEET</h1></div>
   <div class="subheader">PPR rankings &nbsp;|&nbsp; $200 auction values &nbsp;|&nbsp; Bye weeks in parentheses &nbsp;|&nbsp; Tier shown at right &nbsp;|&nbsp; <b>Updated 8/26/2026</b></div>
   <div class="legend-bar">
     <span>Click cells to track draft:</span>
-    <span><span class="legend-swatch sw-gray"></span> Double-click = Gray (drafted)</span>
+    <span><span class="legend-swatch sw-blue"></span> Double-click = Blue</span>
     <span><span class="legend-swatch sw-yellow"></span> Cmd + Click = Yellow (target)</span>
     <span><span class="legend-swatch sw-dark"></span> Option + Click = Dark Gray (avoid)</span>
     <span>Ctrl + Click = Google search player</span>
@@ -165,7 +172,7 @@
       </div>
     </div>
   </div>
-  <div class="footer">Tip: Double-click a player row to mark as drafted (gray). Cmd+Click to mark as target (yellow). Option (Alt, Mac) + Click to mark as avoid (dark gray). Ctrl+Click searches the player on Google in a new tab. Click again with same modifier to clear. Closely track draft: click "Connect File" and pick yahoo-auction-state.json (commit it to git) &middot; every change auto-saves to that file &middot; loads it on the next open, on any device.</div>
+  <div class="footer">Tip: Double-click a player row to mark as blue. Cmd+Click to mark as target (yellow). Option (Alt, Mac) + Click to mark as avoid (dark gray). Ctrl+Click searches the player on Google in a new tab. Click again with same modifier to clear. Closely track draft: click "Connect File" and pick yahoo-auction-state.json (commit it to git) &middot; every change auto-saves to that file &middot; loads it on the next open, on any device.</div>
 </div>
 <script>
 const qb = [
@@ -272,7 +279,8 @@ const rb = [
  [47,"Tyrone Tracy Jr.","(8)","NYG","$1","7"],
  [48,"Tyjae Spears","(9)","TEN","$1","7"],
  [49,"Tyler Allgeier","(14)","ARI","$1","7"],
- [50,"Ray Davis","(7)","BUF","$1","7"]
+ [50,"Ray Davis","(7)","BUF","$1","7"],
+ [51,"Mike Washington Jr.","(13)","LV","$1","7"]
 ];
 const wr = [
  [1,"Ja'Marr Chase","(6)","CIN","$55","1"],
@@ -377,7 +385,7 @@ function getState(){
   const state = {};
   document.querySelectorAll('tbody tr[data-id]').forEach(tr=>{
     const id = tr.dataset.id;
-    const cls = [...tr.classList].find(c=>c==='hl-gray'||c==='hl-yellow'||c==='hl-dark');
+    const cls = [...tr.classList].find(c=>c==='hl-gray'||c==='hl-blue'||c==='hl-yellow'||c==='hl-dark');
     if(cls) state[id]=cls;
   });
   const notes = document.getElementById('dst-notes');
@@ -390,7 +398,7 @@ function applyState(state){
   document.querySelectorAll('tbody tr[data-id]').forEach(tr=>{
     const id = tr.dataset.id;
     const cls = state[id];
-    if(cls==='hl-gray'||cls==='hl-yellow'||cls==='hl-dark'){
+    if(cls==='hl-gray'||cls==='hl-blue'||cls==='hl-yellow'||cls==='hl-dark'){
       tr.classList.add(cls);
     }
   });
@@ -412,11 +420,21 @@ function updateTotalBox(){
   });
   const amountEl = document.getElementById('total-amount');
   if(amountEl) amountEl.textContent = '$' + total;
+  let totalBlue = 0;
+  document.querySelectorAll('tbody tr.hl-blue').forEach(tr=>{
+    const el = tr.querySelector('td.dollar');
+    if(el){
+      const v = parseInt((el.textContent||'').replace(/[^0-9]/g,''), 10);
+      if(!isNaN(v)) totalBlue += v;
+    }
+  });
+  const amountBlueEl = document.getElementById('total-amount-blue');
+  if(amountBlueEl) amountBlueEl.textContent = '$' + totalBlue;
 }
 
 function clearState(){
-  document.querySelectorAll('tbody tr.hl-gray, tbody tr.hl-yellow, tbody tr.hl-dark').forEach(tr=>{
-    tr.classList.remove('hl-gray','hl-yellow','hl-dark');
+  document.querySelectorAll('tbody tr.hl-gray, tbody tr.hl-blue, tbody tr.hl-yellow, tbody tr.hl-dark').forEach(tr=>{
+    tr.classList.remove('hl-gray','hl-blue','hl-yellow','hl-dark');
   });
   const notesEl = document.getElementById('dst-notes');
   if(notesEl) notesEl.value = '';
@@ -586,12 +604,12 @@ renderRows(dst,"dst-body","dst");
 
 // Bind interactions after render, then load persisted highlights
 // Make each cell clickable: behavior
-// Double-click -> gray, Shift+Click -> yellow, Cmd/Ctrl+Click -> dark gray
+// Double-click -> blue, Shift+Click -> yellow, Cmd/Ctrl+Click -> dark gray
 
 function toggleRow(tr, cls){
   const has = tr.classList.contains(cls);
-  tr.classList.remove("hl-gray","hl-yellow","hl-dark");
-  tr.querySelectorAll("td").forEach(td=>td.classList.remove("hl-gray","hl-yellow","hl-dark"));
+  tr.classList.remove("hl-gray","hl-blue","hl-yellow","hl-dark");
+  tr.querySelectorAll("td").forEach(td=>td.classList.remove("hl-gray","hl-blue","hl-yellow","hl-dark"));
   if(!has){
     tr.classList.add(cls);
   }
@@ -636,12 +654,12 @@ function bindEvents(){
       td.addEventListener("dblclick", (e)=>{
         e.preventDefault();
         e.stopPropagation();
-        toggleRow(tr, "hl-gray");
+        toggleRow(tr, "hl-blue");
       });
     });
     tr.addEventListener("dblclick", (e)=>{
       if(e.target.tagName==="TR"){
-        toggleRow(tr, "hl-gray");
+        toggleRow(tr, "hl-blue");
       }
     });
   });
